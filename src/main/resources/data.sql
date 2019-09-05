@@ -18,15 +18,9 @@ values ('Ounce');
 INSERT INTO unit_of_measure (description)
 values ('Pinch');
 INSERT INTO unit_of_measure (description)
-values ('Clove');
-INSERT INTO unit_of_measure (description)
-values ('Thigh');
-INSERT INTO unit_of_measure (description)
-values ('Tortilla');
-INSERT INTO unit_of_measure (description)
-values ('Medium');
-INSERT INTO unit_of_measure (description)
 values ('Pint');
+INSERT INTO unit_of_measure (description)
+values ('Pound');
 -- 'Thing' used for e.g. 1/4 onion, 1 lime
 INSERT INTO unit_of_measure (description)
 values ('Thing');
