@@ -20,7 +20,9 @@ values ('Pinch');
 INSERT INTO unit_of_measure (description)
 values ('Pint');
 INSERT INTO unit_of_measure (description)
+values ('Dash');
+INSERT INTO unit_of_measure (description)
 values ('Pound');
--- 'Thing' used for e.g. 1/4 onion, 1 lime
+-- 'Thing' used for 1/4 onion, 1 lime, etc.
 INSERT INTO unit_of_measure (description)
 values ('Thing');

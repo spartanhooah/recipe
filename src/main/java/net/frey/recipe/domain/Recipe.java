@@ -1,6 +1,7 @@
 package net.frey.recipe.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -20,18 +21,22 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(exclude = {"ingredients"})
 @Entity
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String title;
     private String description;
     private Integer prepTime;
     private Integer cookTime;
     private Integer servings;
     private String source;
     private String url;
+
+    @Lob
     private String directions;
 
     @Enumerated(value = EnumType.STRING)
@@ -46,9 +51,14 @@ public class Recipe {
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "recipe_category",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }
