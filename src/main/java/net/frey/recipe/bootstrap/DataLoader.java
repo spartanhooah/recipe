@@ -1,5 +1,6 @@
 package net.frey.recipe.bootstrap;
 
+import lombok.extern.slf4j.Slf4j;
 import net.frey.recipe.domain.Category;
 import net.frey.recipe.domain.Difficulty;
 import net.frey.recipe.domain.Ingredient;
@@ -17,6 +18,7 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.util.Arrays;
 
+@Slf4j
 @Component
 public class DataLoader implements CommandLineRunner {
     private final RecipeRepository recipeRepository;
