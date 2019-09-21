@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
     private RecipeService recipeService;
-    private RecipeRepository recipeRepository;
 
-    public IndexController(RecipeService recipeService, RecipeRepository recipeRepository) {
+    public IndexController(RecipeService recipeService) {
         this.recipeService = recipeService;
-        this.recipeRepository = recipeRepository;
     }
 
     @RequestMapping({"", "/", "/index"})

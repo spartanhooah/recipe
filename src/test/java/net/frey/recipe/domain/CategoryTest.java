@@ -3,8 +3,11 @@ package net.frey.recipe.domain;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 public class CategoryTest {
-    Category category;
+    private static final Long ID = 4L;
+    private Category category;
 
     @Before
     public void setUp() {
@@ -13,8 +16,9 @@ public class CategoryTest {
 
     @Test
     public void getId() {
-        category.setId(4L);
-        assertEquals(4:category.getId());
+        category.setId(ID);
+
+        assertEquals(ID, category.getId());
     }
 
     @Test
