@@ -9,8 +9,10 @@ import net.frey.recipe.domain.UnitOfMeasure;
 import net.frey.recipe.repository.CategoryRepository;
 import net.frey.recipe.repository.RecipeRepository;
 import net.frey.recipe.repository.UnitOfMeasureRepository;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +22,7 @@ import java.util.Arrays;
 
 @Slf4j
 @Component
-public class DataLoader implements CommandLineRunner {
+public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
     private final CategoryRepository categoryRepository;
@@ -32,7 +34,8 @@ public class DataLoader implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) {
+    @Transactional
+    public void onApplicationEvent(ContextRefreshedEvent event) {
         UnitOfMeasure tablespoon = unitOfMeasureRepository.findByDescription("Tablespoon").get();
         UnitOfMeasure teaspoon = unitOfMeasureRepository.findByDescription("Teaspoon").get();
         UnitOfMeasure thing = unitOfMeasureRepository.findByDescription("Thing").get();
