@@ -30,7 +30,7 @@ public class RecipeServiceJpaTest {
 
     @Before
     public void setUp() {
-        recipeServiceJpa = new RecipeServiceJpa(recipeRepository);
+        recipeServiceJpa = new RecipeServiceJpa(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
     @Test

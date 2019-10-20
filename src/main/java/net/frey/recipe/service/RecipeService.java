@@ -1,5 +1,6 @@
 package net.frey.recipe.service;
 
+import net.frey.recipe.command.RecipeCommand;
 import net.frey.recipe.domain.Recipe;
 
 import java.util.Set;
@@ -10,4 +11,6 @@ public interface RecipeService {
     Recipe findById(Long id);
 
     Recipe findByIdFullyPopulated(Long id);
+
+    RecipeCommand saveRecipeCommand(RecipeCommand command);
 }
