@@ -1,5 +1,7 @@
 package net.frey.recipe.service;
 
+import net.frey.recipe.converters.RecipeCommandToRecipe;
+import net.frey.recipe.converters.RecipeToRecipeCommand;
 import net.frey.recipe.domain.Recipe;
 import net.frey.recipe.repository.RecipeRepository;
 import org.junit.Before;
@@ -26,7 +28,13 @@ public class RecipeServiceJpaTest {
     private RecipeServiceJpa recipeServiceJpa;
 
     @Mock
-    RecipeRepository recipeRepository;
+    private RecipeRepository recipeRepository;
+
+    @Mock
+    private RecipeCommandToRecipe recipeCommandToRecipe;
+
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
 
     @Before
     public void setUp() {
