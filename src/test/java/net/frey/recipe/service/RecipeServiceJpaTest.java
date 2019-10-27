@@ -70,4 +70,12 @@ public class RecipeServiceJpaTest {
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();
     }
+
+    @Test
+    public void deleteRecipeById() {
+        Long idToDelete = 2L;
+        recipeServiceJpa.deleteById(idToDelete);
+
+        verify(recipeRepository, times(1)).deleteById(idToDelete);
+    }
 }
