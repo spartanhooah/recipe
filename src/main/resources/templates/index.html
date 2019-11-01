@@ -34,28 +34,30 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Title</th>
-                                    <th>View</th>
-                                    <th>Update</th>
                                 </tr>
                                 </thead>
                                 <tr th:remove="all">
                                     <td>123</td>
                                     <td>Yummy 1</td>
-                                    <td><a href="#">View</a></td>
-                                    <td><a href="#">Update</a></td>
                                 </tr>
                                 <tr th:remove="all">
                                     <td>456</td>
                                     <td>Yummy 2</td>
-                                    <td><a href="#">View</a></td>
-                                    <td><a href="#">Update</a></td>
                                 </tr>
                                 <tr th:each="recipe : ${recipes}">
                                     <!--/*@thymesVar id="recipe" type="net.frey.recipe.domain.Recipe*/-->
                                     <td th:text="${recipe.id}">789</td>
                                     <td th:text="${recipe.title}">Yummy 3</td>
-                                    <td><a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/show' }">View</a></td>
-                                    <td><a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/update' }">Update</a></td>
+                                    <td>
+                                        <a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/show' }"
+                                           class="btn btn-link" style="float: left;">View</a>
+                                        <a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/update' }"
+                                           class="btn btn-link" style="float: left;">Update</a>
+                                        <form action="#" th:action="@{'/recipe/' + ${recipe.id}}" th:method="delete"
+                                              style="float: left;">
+                                            <button type="submit" id="submitButton" class="btn btn-link">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
