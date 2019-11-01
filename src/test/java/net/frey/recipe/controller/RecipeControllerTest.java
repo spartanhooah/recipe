@@ -44,7 +44,6 @@ public class RecipeControllerTest {
 
         recipeCommand = new RecipeCommand();
         recipeCommand.setId(DEFAULT_ID);
-        when(recipeService.saveRecipeCommand(recipeCommand)).thenReturn(recipeCommand);
     }
 
     @Test
