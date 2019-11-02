@@ -1,6 +1,8 @@
 package net.frey.recipe.controller;
 
+import net.frey.recipe.command.IngredientCommand;
 import net.frey.recipe.command.RecipeCommand;
+import net.frey.recipe.service.IngredientService;
 import net.frey.recipe.service.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,9 +29,12 @@ public class IngredientControllerTest {
     @Mock
     private RecipeService recipeService;
 
+    @Mock
+    private IngredientService ingredientService;
+
     @Before
     public void setUp() {
-        ingredientController = new IngredientController(recipeService);
+        ingredientController = new IngredientController(recipeService, ingredientService);
         mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
     }
 
@@ -44,5 +49,12 @@ public class IngredientControllerTest {
                 .andExpect(model().attributeExists("recipe"));
 
         verify(recipeService, times(1)).findCommandById(anyLong());
+    }
+
+    @Test
+    public void showIngredient() {
+        IngredientCommand ingredientCommand = new IngredientCommand();
+
+        when(ingredientService.findCommandById(anyLong())).thenReturn(ingredientCommand);
     }
 }
