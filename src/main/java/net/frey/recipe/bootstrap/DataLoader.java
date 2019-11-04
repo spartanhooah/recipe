@@ -27,7 +27,10 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private final UnitOfMeasureRepository unitOfMeasureRepository;
     private final CategoryRepository categoryRepository;
 
-    public DataLoader(RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository, CategoryRepository categoryRepository) {
+    public DataLoader(
+            RecipeRepository recipeRepository,
+            UnitOfMeasureRepository unitOfMeasureRepository,
+            CategoryRepository categoryRepository) {
         this.recipeRepository = recipeRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
         this.categoryRepository = categoryRepository;
@@ -47,22 +50,24 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
         Recipe chickenTacos = new Recipe();
         chickenTacos.setTitle("Spicy grilled chicken tacos");
-        chickenTacos.setDescription("Spicy grilled chicken tacos! Quick marinade, then grill. Ready in about 30 minutes. Great for a quick weeknight dinner, backyard cookouts, and tailgate parties.");
+        chickenTacos.setDescription(
+                "Spicy grilled chicken tacos! Quick marinade, then grill. Ready in about 30 minutes. Great for a quick weeknight dinner, backyard cookouts, and tailgate parties.");
         chickenTacos.setCookTime(15);
         chickenTacos.setPrepTime(20);
         chickenTacos.setServings(5);
         chickenTacos.setSource("Simply Recipes");
         chickenTacos.setUrl("https://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
-        chickenTacos.setDirections("1 Prepare a gas or charcoal grill for medium-high, direct heat.\n" +
-                "2 Make the marinade and coat the chicken: In a large bowl, stir together the chili powder, oregano, cumin, sugar, salt, garlic and orange zest. Stir in the orange juice and olive oil to make a loose paste. Add the chicken to the bowl and toss to coat all over.\n" +
-                "Set aside to marinate while the grill heats and you prepare the rest of the toppings.\n" +
-                "Spicy Grilled Chicken Tacos\n" +
-                "3 Grill the chicken: Grill the chicken for 3 to 4 minutes per side, or until a thermometer inserted into the thickest part of the meat registers 165F. Transfer to a plate and rest for 5 minutes.\n" +
-                "4 Warm the tortillas: Place each tortilla on the grill or on a hot, dry skillet over medium-high heat. As soon as you see pockets of the air start to puff up in the tortilla, turn it with tongs and heat for a few seconds on the other side.\n" +
-                "Wrap warmed tortillas in a tea towel to keep them warm until serving.\n" +
-                "5 Assemble the tacos: Slice the chicken into strips. On each tortilla, place a small handful of arugula. Top with chicken slices, sliced avocado, radishes, tomatoes, and onion slices. Drizzle with the thinned sour cream. Serve with lime wedges.\n");
+        chickenTacos.setDirections(
+                "1 Prepare a gas or charcoal grill for medium-high, direct heat.\n"
+                        + "2 Make the marinade and coat the chicken: In a large bowl, stir together the chili powder, oregano, cumin, sugar, salt, garlic and orange zest. Stir in the orange juice and olive oil to make a loose paste. Add the chicken to the bowl and toss to coat all over.\n"
+                        + "Set aside to marinate while the grill heats and you prepare the rest of the toppings.\n"
+                        + "Spicy Grilled Chicken Tacos\n"
+                        + "3 Grill the chicken: Grill the chicken for 3 to 4 minutes per side, or until a thermometer inserted into the thickest part of the meat registers 165F. Transfer to a plate and rest for 5 minutes.\n"
+                        + "4 Warm the tortillas: Place each tortilla on the grill or on a hot, dry skillet over medium-high heat. As soon as you see pockets of the air start to puff up in the tortilla, turn it with tongs and heat for a few seconds on the other side.\n"
+                        + "Wrap warmed tortillas in a tea towel to keep them warm until serving.\n"
+                        + "5 Assemble the tacos: Slice the chicken into strips. On each tortilla, place a small handful of arugula. Top with chicken slices, sliced avocado, radishes, tomatoes, and onion slices. Drizzle with the thinned sour cream. Serve with lime wedges.\n");
         chickenTacos.setDifficulty(Difficulty.MODERATE);
-//        chickenTacos.setImage(extractBytes("GrilledChickenTacos.jpg"));
+        //        chickenTacos.setImage(extractBytes("GrilledChickenTacos.jpg"));
         chickenTacos.getCategories().add(mexican);
 
         Ingredient anchoChiliPowder = new Ingredient();
@@ -185,46 +190,50 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         lime.setUnitOfMeasure(thing);
         lime.setRecipe(chickenTacos);
 
-        chickenTacos.getIngredients().addAll(Arrays.asList(
-                anchoChiliPowder,
-                oregano,
-                cumin,
-                sugar,
-                salt,
-                garlic,
-                orangeZest,
-                orangeJuice,
-                oliveOil,
-                chicken,
-                tortillas,
-                arugula,
-                avocado,
-                radish,
-                tomatoes,
-                redOnion,
-                cilantro,
-                sourCream,
-                milk,
-                lime
-        ));
+        chickenTacos
+                .getIngredients()
+                .addAll(
+                        Arrays.asList(
+                                anchoChiliPowder,
+                                oregano,
+                                cumin,
+                                sugar,
+                                salt,
+                                garlic,
+                                orangeZest,
+                                orangeJuice,
+                                oliveOil,
+                                chicken,
+                                tortillas,
+                                arugula,
+                                avocado,
+                                radish,
+                                tomatoes,
+                                redOnion,
+                                cilantro,
+                                sourCream,
+                                milk,
+                                lime));
 
         recipeRepository.save(chickenTacos);
 
         Recipe guacamole = new Recipe();
         guacamole.setTitle("Guacamole");
-        guacamole.setDescription("Guacamole, a dip made from avocados, is originally from Mexico. The name is derived from two Aztec Nahuatl words—ahuacatl (avocado) and molli (sauce).");
+        guacamole.setDescription(
+                "Guacamole, a dip made from avocados, is originally from Mexico. The name is derived from two Aztec Nahuatl words—ahuacatl (avocado) and molli (sauce).");
         guacamole.setCookTime(0);
         guacamole.setPrepTime(10);
         guacamole.setServings(3);
         guacamole.setSource("Simply Recipes");
         guacamole.setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
-        guacamole.setDirections("1 Cut avocado, remove flesh: Cut the avocados in half. Remove seed. Score the inside of the avocado with a blunt knife and scoop out the flesh with a spoon. (See How to Cut and Peel an Avocado.) Place in a bowl.\n" +
-                "2 Mash with a fork: Using a fork, roughly mash the avocado. (Don't overdo it! The guacamole should be a little chunky.)\n" +
-                "3 Add salt, lime juice, and the rest: Sprinkle with salt and lime (or lemon) juice. The acid in the lime juice will provide some balance to the richness of the avocado and will help delay the avocados from turning brown.\n" +
-                "Add the chopped onion, cilantro, black pepper, and chiles. Chili peppers vary individually in their hotness. So, start with a half of one chili pepper and add to the guacamole to your desired degree of hotness.\n" +
-                "Remember that much of this is done to taste because of the variability in the fresh ingredients. Start with this recipe and adjust to your taste.\n" +
-                "4 Cover with plastic and chill to store: Place plastic wrap on the surface of the guacamole cover it and to prevent air reaching it. (The oxygen in the air causes oxidation which will turn the guacamole brown.) Refrigerate until ready to serve.\n" +
-                "Chilling tomatoes hurts their flavor, so if you want to add chopped tomato to your guacamole, add it just before serving.");
+        guacamole.setDirections(
+                "1 Cut avocado, remove flesh: Cut the avocados in half. Remove seed. Score the inside of the avocado with a blunt knife and scoop out the flesh with a spoon. (See How to Cut and Peel an Avocado.) Place in a bowl.\n"
+                        + "2 Mash with a fork: Using a fork, roughly mash the avocado. (Don't overdo it! The guacamole should be a little chunky.)\n"
+                        + "3 Add salt, lime juice, and the rest: Sprinkle with salt and lime (or lemon) juice. The acid in the lime juice will provide some balance to the richness of the avocado and will help delay the avocados from turning brown.\n"
+                        + "Add the chopped onion, cilantro, black pepper, and chiles. Chili peppers vary individually in their hotness. So, start with a half of one chili pepper and add to the guacamole to your desired degree of hotness.\n"
+                        + "Remember that much of this is done to taste because of the variability in the fresh ingredients. Start with this recipe and adjust to your taste.\n"
+                        + "4 Cover with plastic and chill to store: Place plastic wrap on the surface of the guacamole cover it and to prevent air reaching it. (The oxygen in the air causes oxidation which will turn the guacamole brown.) Refrigerate until ready to serve.\n"
+                        + "Chilling tomatoes hurts their flavor, so if you want to add chopped tomato to your guacamole, add it just before serving.");
         guacamole.setDifficulty(Difficulty.EASY);
         guacamole.getCategories().add(mexican);
 
@@ -276,16 +285,18 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         avocado2.setUnitOfMeasure(thing);
         avocado2.setRecipe(guacamole);
 
-        guacamole.getIngredients().addAll(Arrays.asList(
-                kosherSalt,
-                juice,
-                onion,
-                chili,
-                cilantro2,
-                blackPepper,
-                tomato,
-                avocado2
-        ));
+        guacamole
+                .getIngredients()
+                .addAll(
+                        Arrays.asList(
+                                kosherSalt,
+                                juice,
+                                onion,
+                                chili,
+                                cilantro2,
+                                blackPepper,
+                                tomato,
+                                avocado2));
 
         recipeRepository.save(guacamole);
     }

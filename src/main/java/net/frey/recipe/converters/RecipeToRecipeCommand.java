@@ -15,7 +15,10 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
     private final NotesToNotesCommand notesCoverter;
     private final IngredientToIngredientCommand ingredientsConverter;
 
-    public RecipeToRecipeCommand(CategoryToCategoryCommand categoriesConverter, NotesToNotesCommand notesCoverter, IngredientToIngredientCommand ingredientsConverter) {
+    public RecipeToRecipeCommand(
+            CategoryToCategoryCommand categoriesConverter,
+            NotesToNotesCommand notesCoverter,
+            IngredientToIngredientCommand ingredientsConverter) {
         this.categoriesConverter = categoriesConverter;
         this.notesCoverter = notesCoverter;
         this.ingredientsConverter = ingredientsConverter;
@@ -40,8 +43,14 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
         recipeCommand.setDirections(source.getDirections());
         recipeCommand.setDifficulty(source.getDifficulty());
         recipeCommand.setNotes(notesCoverter.convert(source.getNotes()));
-        recipeCommand.setIngredients(source.getIngredients().stream().map(ingredientsConverter::convert).collect(Collectors.toSet()));
-        recipeCommand.setCategories(source.getCategories().stream().map(categoriesConverter::convert).collect(Collectors.toSet()));
+        recipeCommand.setIngredients(
+                source.getIngredients().stream()
+                        .map(ingredientsConverter::convert)
+                        .collect(Collectors.toSet()));
+        recipeCommand.setCategories(
+                source.getCategories().stream()
+                        .map(categoriesConverter::convert)
+                        .collect(Collectors.toSet()));
 
         return recipeCommand;
     }

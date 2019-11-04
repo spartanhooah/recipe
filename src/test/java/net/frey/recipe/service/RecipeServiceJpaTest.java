@@ -38,7 +38,9 @@ public class RecipeServiceJpaTest {
 
     @Before
     public void setUp() {
-        recipeServiceJpa = new RecipeServiceJpa(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
+        recipeServiceJpa =
+                new RecipeServiceJpa(
+                        recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
     @Test

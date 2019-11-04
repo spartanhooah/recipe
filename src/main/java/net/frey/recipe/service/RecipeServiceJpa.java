@@ -1,5 +1,6 @@
 package net.frey.recipe.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.frey.recipe.command.RecipeCommand;
 import net.frey.recipe.converters.RecipeCommandToRecipe;
@@ -15,16 +16,11 @@ import java.util.Set;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class RecipeServiceJpa implements RecipeService {
     private final RecipeRepository recipeRepository;
     private final RecipeCommandToRecipe recipeCommandToRecipe;
     private final RecipeToRecipeCommand recipeToRecipeCommand;
-
-    public RecipeServiceJpa(RecipeRepository recipeRepository, RecipeCommandToRecipe recipeCommandToRecipe, RecipeToRecipeCommand recipeToRecipeCommand) {
-        this.recipeRepository = recipeRepository;
-        this.recipeCommandToRecipe = recipeCommandToRecipe;
-        this.recipeToRecipeCommand = recipeToRecipeCommand;
-    }
 
     @Override
     public Set<Recipe> getRecipes() {
@@ -43,6 +39,7 @@ public class RecipeServiceJpa implements RecipeService {
             throw new RuntimeException("Could not find recipe with id " + id);
         }
 
+        // To non-lazily load (I think)
         recipeOptional.get().getCategories().size();
         recipeOptional.get().getIngredients().size();
 
@@ -53,6 +50,7 @@ public class RecipeServiceJpa implements RecipeService {
     public Recipe findByIdFullyPopulated(Long id) {
         Recipe recipe = this.findById(id);
 
+        // To non-lazily load (I think)
         recipe.getCategories().size();
         recipe.getIngredients().size();
 

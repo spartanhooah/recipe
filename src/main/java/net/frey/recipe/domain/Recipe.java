@@ -52,7 +52,8 @@ public class Recipe {
     private Notes notes;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "recipe_category",
+    @JoinTable(
+            name = "recipe_category",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
