@@ -26,6 +26,7 @@ public class IngredientServiceJpa implements IngredientService {
     private final IngredientToIngredientCommand ingredientToIngredientCommand;
 
     @Override
+    @Transactional
     public IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
