@@ -4,9 +4,9 @@ import net.frey.recipe.converters.RecipeCommandToRecipe;
 import net.frey.recipe.converters.RecipeToRecipeCommand;
 import net.frey.recipe.domain.Recipe;
 import net.frey.recipe.repository.RecipeRepository;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RecipeServiceJpaTest {
+    @InjectMocks
     private RecipeServiceJpa recipeServiceJpa;
 
     @Mock
@@ -34,14 +35,7 @@ public class RecipeServiceJpaTest {
     private RecipeCommandToRecipe recipeCommandToRecipe;
 
     @Mock
-    RecipeToRecipeCommand recipeToRecipeCommand;
-
-    @Before
-    public void setUp() {
-        recipeServiceJpa =
-                new RecipeServiceJpa(
-                        recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
-    }
+    private RecipeToRecipeCommand recipeToRecipeCommand;
 
     @Test
     public void getRecipes() {

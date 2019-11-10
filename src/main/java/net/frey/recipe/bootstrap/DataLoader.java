@@ -41,7 +41,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     public void onApplicationEvent(ContextRefreshedEvent event) {
         UnitOfMeasure tablespoon = unitOfMeasureRepository.findByDescription("Tablespoon").get();
         UnitOfMeasure teaspoon = unitOfMeasureRepository.findByDescription("Teaspoon").get();
-        UnitOfMeasure thing = unitOfMeasureRepository.findByDescription("Thing").get();
+        UnitOfMeasure each = unitOfMeasureRepository.findByDescription("Each").get();
         UnitOfMeasure cup = unitOfMeasureRepository.findByDescription("Cup").get();
         UnitOfMeasure pint = unitOfMeasureRepository.findByDescription("Pint").get();
         UnitOfMeasure dash = unitOfMeasureRepository.findByDescription("Dash").get();
@@ -103,7 +103,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         Ingredient garlic = new Ingredient();
         garlic.setDescription("garlic clove, finely chopped");
         garlic.setAmount(BigDecimal.ONE);
-        garlic.setUnitOfMeasure(thing);
+        garlic.setUnitOfMeasure(each);
         garlic.setRecipe(chickenTacos);
 
         Ingredient orangeZest = new Ingredient();
@@ -127,13 +127,13 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         Ingredient chicken = new Ingredient();
         chicken.setDescription("skinless, boneless chicken thighs");
         chicken.setAmount(BigDecimal.valueOf(5L));
-        chicken.setUnitOfMeasure(thing);
+        chicken.setUnitOfMeasure(each);
         chicken.setRecipe(chickenTacos);
 
         Ingredient tortillas = new Ingredient();
         tortillas.setDescription("small corn tortillas");
         tortillas.setAmount(BigDecimal.valueOf(8L));
-        tortillas.setUnitOfMeasure(thing);
+        tortillas.setUnitOfMeasure(each);
         tortillas.setRecipe(chickenTacos);
 
         Ingredient arugula = new Ingredient();
@@ -145,13 +145,13 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         Ingredient avocado = new Ingredient();
         avocado.setDescription("medium ripe avocados");
         avocado.setAmount(BigDecimal.valueOf(2L));
-        avocado.setUnitOfMeasure(thing);
+        avocado.setUnitOfMeasure(each);
         avocado.setRecipe(chickenTacos);
 
         Ingredient radish = new Ingredient();
         radish.setDescription("radishes, thinly sliced");
         radish.setAmount(BigDecimal.valueOf(4L));
-        radish.setUnitOfMeasure(thing);
+        radish.setUnitOfMeasure(each);
         radish.setRecipe(chickenTacos);
 
         Ingredient tomatoes = new Ingredient();
@@ -163,13 +163,13 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         Ingredient redOnion = new Ingredient();
         redOnion.setDescription("red onion, thinly sliced");
         redOnion.setAmount(BigDecimal.valueOf(0.25));
-        redOnion.setUnitOfMeasure(thing);
+        redOnion.setUnitOfMeasure(each);
         redOnion.setRecipe(chickenTacos);
 
         Ingredient cilantro = new Ingredient();
         cilantro.setDescription("roughly chopped cilantro");
         cilantro.setAmount(BigDecimal.ONE);
-        cilantro.setUnitOfMeasure(thing);
+        cilantro.setUnitOfMeasure(each);
         cilantro.setRecipe(chickenTacos);
 
         Ingredient sourCream = new Ingredient();
@@ -187,7 +187,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         Ingredient lime = new Ingredient();
         lime.setDescription("lime, cut into wedges");
         lime.setAmount(BigDecimal.ONE);
-        lime.setUnitOfMeasure(thing);
+        lime.setUnitOfMeasure(each);
         lime.setRecipe(chickenTacos);
 
         chickenTacos
@@ -258,7 +258,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         Ingredient chili = new Ingredient();
         chili.setDescription("serrano chiles, stems and seeds removed, minced");
         chili.setAmount(BigDecimal.ONE);
-        chili.setUnitOfMeasure(thing);
+        chili.setUnitOfMeasure(each);
         chili.setRecipe(guacamole);
 
         Ingredient cilantro2 = new Ingredient();
@@ -276,13 +276,13 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         Ingredient tomato = new Ingredient();
         tomato.setDescription("ripe tomato, seeds and pulp removed, chopped");
         tomato.setAmount(BigDecimal.valueOf(0.5));
-        tomato.setUnitOfMeasure(thing);
+        tomato.setUnitOfMeasure(each);
         tomato.setRecipe(guacamole);
 
         Ingredient avocado2 = new Ingredient();
         avocado2.setDescription("ripe avocado");
         avocado2.setAmount(BigDecimal.valueOf(2));
-        avocado2.setUnitOfMeasure(thing);
+        avocado2.setUnitOfMeasure(each);
         avocado2.setRecipe(guacamole);
 
         guacamole

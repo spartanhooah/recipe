@@ -35,7 +35,6 @@ public class IngredientServiceJpa implements IngredientService {
             throw new RuntimeException("Recipe ID " + recipeId + " was not found.");
         } else {
             Recipe recipe = recipeOptional.get();
-            log.info("found a recipe with ID {} which has {} ingredients.", recipe.getId(), recipe.getIngredients().size());
 
             Optional<IngredientCommand> ingredientCommandOptional =
                     recipe.getIngredients().stream()
@@ -131,5 +130,10 @@ public class IngredientServiceJpa implements IngredientService {
             // TODO: check for fail
             return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
         }
+    }
+
+    @Override
+    public void deleteById(Long ingredientId) {
+        ingredientRepository.deleteById(ingredientId);
     }
 }

@@ -10,6 +10,7 @@ import net.frey.recipe.service.RecipeService;
 import net.frey.recipe.service.UnitOfMeasureService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,5 +78,12 @@ public class IngredientController {
         model.addAttribute("unitOfMeasureList", unitOfMeasureService.listAllUnitsOfMeasure());
 
         return "recipe/ingredient/ingredientform";
+    }
+
+    @DeleteMapping(path = "recipe/{recipeId}/ingredient/{ingredientId}")
+    public String deleteIngredient(@PathVariable Long recipeId, @PathVariable Long ingredientId) {
+        ingredientService.deleteById(ingredientId);
+
+        return "redirect:/";
     }
 }

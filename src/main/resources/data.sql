@@ -23,6 +23,6 @@ INSERT INTO unit_of_measure (description)
 values ('Dash');
 INSERT INTO unit_of_measure (description)
 values ('Pound');
--- 'Thing' used for 1/4 onion, 1 lime, etc.
+-- 'Each' used for 1/4 onion, 1 lime, etc.
 INSERT INTO unit_of_measure (description)
-values ('Thing');
+values ('Each');
