@@ -1,10 +1,9 @@
 package net.frey.recipe.command;
 
-import lombok.Data;
-import net.frey.recipe.domain.Difficulty;
-
 import java.util.HashSet;
 import java.util.Set;
+import lombok.Data;
+import net.frey.recipe.domain.Difficulty;
 
 @Data
 public class RecipeCommand {

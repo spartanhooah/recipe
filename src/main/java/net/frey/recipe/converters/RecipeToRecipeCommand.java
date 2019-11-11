@@ -1,13 +1,12 @@
 package net.frey.recipe.converters;
 
+import java.util.stream.Collectors;
 import lombok.Synchronized;
 import net.frey.recipe.command.RecipeCommand;
 import net.frey.recipe.domain.Recipe;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
-
-import java.util.stream.Collectors;
 
 @Component
 public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {

@@ -1,5 +1,6 @@
 package net.frey.recipe.service;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.frey.recipe.command.IngredientCommand;
@@ -12,8 +13,6 @@ import net.frey.recipe.repository.RecipeRepository;
 import net.frey.recipe.repository.UnitOfMeasureRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -80,11 +79,11 @@ public class IngredientServiceJpa implements IngredientService {
                                 .findById(ingredientCommand.getUnitOfMeasure().getId())
                                 .orElseThrow(
                                         () -> // TODO: improve this
-                                                new RuntimeException(
+                                        new RuntimeException(
                                                         "Could not find provided UnitOfMeasure with ID "
                                                                 + ingredientCommand
-                                                                .getUnitOfMeasure()
-                                                                .getId())));
+                                                                        .getUnitOfMeasure()
+                                                                        .getId())));
             } else {
                 Ingredient ingredient = ingredientCommandToIngredient.convert(ingredientCommand);
                 ingredient.setRecipe(recipe);

@@ -1,5 +1,17 @@
 package net.frey.recipe.controller;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+import java.util.HashSet;
+import java.util.Set;
 import net.frey.recipe.domain.Recipe;
 import net.frey.recipe.service.RecipeService;
 import org.junit.Before;
@@ -12,28 +24,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
 @RunWith(MockitoJUnitRunner.class)
 public class IndexControllerTest {
     private IndexController indexController;
 
-    @Mock
-    private RecipeService recipeService;
+    @Mock private RecipeService recipeService;
 
-    @Mock
-    private Model model;
+    @Mock private Model model;
 
     @Before
     public void setUp() {

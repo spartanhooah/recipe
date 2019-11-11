@@ -1,9 +1,9 @@
 package net.frey.recipe.domain;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 public class CategoryTest {
     private static final Long ID = 4L;
@@ -22,10 +22,8 @@ public class CategoryTest {
     }
 
     @Test
-    public void getRecipes() {
-    }
+    public void getRecipes() {}
 
     @Test
-    public void getDescription() {
-    }
+    public void getDescription() {}
 }

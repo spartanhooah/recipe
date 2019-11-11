@@ -1,5 +1,10 @@
 package net.frey.recipe.bootstrap;
 
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
 import net.frey.recipe.domain.Category;
 import net.frey.recipe.domain.Difficulty;
@@ -13,12 +18,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.util.Arrays;
 
 @Slf4j
 @Component

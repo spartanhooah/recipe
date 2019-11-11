@@ -1,14 +1,14 @@
 package net.frey.recipe.converters;
 
-import net.frey.recipe.command.UnitOfMeasureCommand;
-import net.frey.recipe.domain.UnitOfMeasure;
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+
+import net.frey.recipe.command.UnitOfMeasureCommand;
+import net.frey.recipe.domain.UnitOfMeasure;
+import org.junit.Before;
+import org.junit.Test;
 
 public class UnitOfMeasureCommandToUnitOfMeasureTest {
     private static final String DESCRIPTION = "unit";

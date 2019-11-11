@@ -1,9 +1,7 @@
 package net.frey.recipe.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,8 +16,9 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import java.util.HashSet;
-import java.util.Set;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -38,8 +37,7 @@ public class Recipe {
     private String source;
     private String url;
 
-    @Lob
-    private String directions;
+    @Lob private String directions;
 
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
@@ -47,8 +45,7 @@ public class Recipe {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients = new HashSet<>();
 
-    @Lob
-    private byte[] image;
+    @Lob private byte[] image;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;

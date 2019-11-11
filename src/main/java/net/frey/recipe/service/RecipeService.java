@@ -1,9 +1,8 @@
 package net.frey.recipe.service;
 
+import java.util.Set;
 import net.frey.recipe.command.RecipeCommand;
 import net.frey.recipe.domain.Recipe;
-
-import java.util.Set;
 
 public interface RecipeService {
     Set<Recipe> getRecipes();

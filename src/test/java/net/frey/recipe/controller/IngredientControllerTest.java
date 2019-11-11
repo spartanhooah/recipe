@@ -1,5 +1,18 @@
 package net.frey.recipe.controller;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+import java.util.HashSet;
 import net.frey.recipe.command.IngredientCommand;
 import net.frey.recipe.command.RecipeCommand;
 import net.frey.recipe.service.IngredientService;
@@ -14,33 +27,16 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.HashSet;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
 @RunWith(MockitoJUnitRunner.class)
 public class IngredientControllerTest {
     private IngredientController ingredientController;
     private MockMvc mockMvc;
 
-    @Mock
-    private RecipeService recipeService;
+    @Mock private RecipeService recipeService;
 
-    @Mock
-    private IngredientService ingredientService;
+    @Mock private IngredientService ingredientService;
 
-    @Mock
-    private UnitOfMeasureService unitOfMeasureService;
+    @Mock private UnitOfMeasureService unitOfMeasureService;
 
     @Before
     public void setUp() {
@@ -99,10 +95,10 @@ public class IngredientControllerTest {
         when(ingredientService.saveIngredientCommand(any())).thenReturn(ingredientCommand);
 
         mockMvc.perform(
-                post("/recipe/2/ingredients")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("id", "")
-                        .param("description", "someString"))
+                        post("/recipe/2/ingredients")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("id", "")
+                                .param("description", "someString"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/2/ingredient/3/show"));
     }

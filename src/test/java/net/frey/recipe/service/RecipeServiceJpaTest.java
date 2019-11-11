@@ -1,5 +1,17 @@
 package net.frey.recipe.service;
 
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import net.frey.recipe.converters.RecipeCommandToRecipe;
 import net.frey.recipe.converters.RecipeToRecipeCommand;
 import net.frey.recipe.domain.Recipe;
@@ -10,32 +22,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 @RunWith(MockitoJUnitRunner.class)
 public class RecipeServiceJpaTest {
-    @InjectMocks
-    private RecipeServiceJpa recipeServiceJpa;
+    @InjectMocks private RecipeServiceJpa recipeServiceJpa;
 
-    @Mock
-    private RecipeRepository recipeRepository;
+    @Mock private RecipeRepository recipeRepository;
 
-    @Mock
-    private RecipeCommandToRecipe recipeCommandToRecipe;
+    @Mock private RecipeCommandToRecipe recipeCommandToRecipe;
 
-    @Mock
-    private RecipeToRecipeCommand recipeToRecipeCommand;
+    @Mock private RecipeToRecipeCommand recipeToRecipeCommand;
 
     @Test
     public void getRecipes() {
