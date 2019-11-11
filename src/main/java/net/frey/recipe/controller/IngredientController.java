@@ -24,7 +24,7 @@ public class IngredientController {
     private final IngredientService ingredientService;
     private final UnitOfMeasureService unitOfMeasureService;
 
-    @GetMapping(path = "/recipe/{recipeId}/ingredient")
+    @GetMapping(path = "/recipe/{recipeId}/ingredients")
     public String listIngredients(@PathVariable Long recipeId, Model model) {
         model.addAttribute("recipe", recipeService.findCommandById(recipeId));
 
@@ -84,6 +84,6 @@ public class IngredientController {
     public String deleteIngredient(@PathVariable Long recipeId, @PathVariable Long ingredientId) {
         ingredientService.deleteById(ingredientId);
 
-        return "redirect:/";
+        return "redirect:/recipe/" + recipeId + "/ingredients";
     }
 }
