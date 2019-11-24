@@ -38,6 +38,7 @@ public class RecipeServiceJpa implements RecipeService {
             throw new RuntimeException("Could not find recipe with id " + id);
         }
 
+        log.debug("found recipe with id " + id);
         // To non-lazily load (I think)
         recipeOptional.get().getCategories().size();
         recipeOptional.get().getIngredients().size();

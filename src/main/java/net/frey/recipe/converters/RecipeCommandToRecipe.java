@@ -51,6 +51,7 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
                 source.getIngredients().stream()
                         .map(ingredientConverter::convert)
                         .collect(Collectors.toSet()));
+        recipe.setImage(source.getImage());
 
         return recipe;
     }

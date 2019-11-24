@@ -2,12 +2,14 @@ package net.frey.recipe.converters;
 
 import java.util.stream.Collectors;
 import lombok.Synchronized;
+import lombok.extern.slf4j.Slf4j;
 import net.frey.recipe.command.RecipeCommand;
 import net.frey.recipe.domain.Recipe;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
     private final CategoryToCategoryCommand categoriesConverter;
@@ -50,6 +52,9 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
                 source.getCategories().stream()
                         .map(categoriesConverter::convert)
                         .collect(Collectors.toSet()));
+        recipeCommand.setImage(source.getImage());
+
+        log.debug("successfully converted recipe to recipe command");
 
         return recipeCommand;
     }

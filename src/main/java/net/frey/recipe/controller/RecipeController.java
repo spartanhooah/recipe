@@ -1,5 +1,6 @@
 package net.frey.recipe.controller;
 
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.frey.recipe.command.RecipeCommand;
@@ -19,14 +20,14 @@ public class RecipeController {
     private RecipeService recipeService;
 
     @GetMapping("/recipe/{id}/show")
-    public String showById(@PathVariable Long id, Model model) {
+    public String showById(@PathVariable Long id, @NotNull Model model) {
         model.addAttribute("recipe", recipeService.findById(id));
 
         return "recipe/show";
     }
 
     @GetMapping("recipe/new")
-    public String getRecipeForm(Model model) {
+    public String getRecipeForm(@NotNull Model model) {
         model.addAttribute("recipe", new RecipeCommand());
 
         return "recipe/form";
@@ -40,7 +41,7 @@ public class RecipeController {
     }
 
     @GetMapping("recipe/{id}/update")
-    public String updateRecipe(@PathVariable Long id, Model model) {
+    public String updateRecipe(@PathVariable Long id, @NotNull Model model) {
         model.addAttribute("recipe", recipeService.findCommandById(id));
 
         return "recipe/form";
