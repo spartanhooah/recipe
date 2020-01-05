@@ -9,6 +9,7 @@ import net.frey.recipe.command.RecipeCommand;
 import net.frey.recipe.converters.RecipeCommandToRecipe;
 import net.frey.recipe.converters.RecipeToRecipeCommand;
 import net.frey.recipe.domain.Recipe;
+import net.frey.recipe.exception.NotFoundException;
 import net.frey.recipe.repository.RecipeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +36,7 @@ public class RecipeServiceJpa implements RecipeService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
 
         if (!recipeOptional.isPresent()) {
-            throw new RuntimeException("Could not find recipe with id " + id);
+            throw new NotFoundException("Could not find recipe with id " + id);
         }
 
         log.debug("found recipe with id " + id);

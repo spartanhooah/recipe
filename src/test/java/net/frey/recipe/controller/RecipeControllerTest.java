@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import net.frey.recipe.command.RecipeCommand;
 import net.frey.recipe.domain.Recipe;
+import net.frey.recipe.exception.NotFoundException;
 import net.frey.recipe.service.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -88,5 +89,13 @@ public class RecipeControllerTest {
                 .andExpect(view().name("redirect:/"));
 
         verify(recipeService, times(1)).deleteById(1L);
+    }
+
+    @Test
+    public void recipeNotFoundReturns404() throws Exception {
+        when(recipeService.findById(anyLong())).thenThrow(new NotFoundException());
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound());
     }
 }
