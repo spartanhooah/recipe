@@ -36,7 +36,7 @@ public class RecipeServiceJpa implements RecipeService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
 
         if (!recipeOptional.isPresent()) {
-            throw new NotFoundException("Could not find recipe with id " + id);
+            throw new NotFoundException("Could not find recipe with ID " + id);
         }
 
         log.debug("found recipe with id " + id);
