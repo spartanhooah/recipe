@@ -39,7 +39,9 @@ public class RecipeControllerTest {
     @Before
     public void setUp() {
         recipeController = new RecipeController(recipeService);
-        mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(recipeController)
+                .setControllerAdvice(new ControllerExceptionHandler())
+                .build();
 
         recipeCommand = new RecipeCommand();
         recipeCommand.setId(DEFAULT_ID);
