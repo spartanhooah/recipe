@@ -1,5 +1,6 @@
 package net.frey.recipe.controller;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import net.frey.recipe.service.RecipeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @AllArgsConstructor
 public class RecipeController {
+    private static final String FORM_URL = "recipe/form";
     private RecipeService recipeService;
 
     @GetMapping("/recipe/{id}/show")
@@ -35,21 +38,27 @@ public class RecipeController {
     public String getRecipeForm(@NotNull Model model) {
         model.addAttribute("recipe", new RecipeCommand());
 
-        return "recipe/form";
+        return FORM_URL;
     }
 
     @PostMapping("recipe")
-    public String saveRecipe(@ModelAttribute RecipeCommand recipeCommand) {
+    public String saveRecipe(@Valid @ModelAttribute("recipe") RecipeCommand recipeCommand, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(objectError -> log.debug(objectError.toString()));
+
+            return FORM_URL;
+        }
+
         RecipeCommand savedRecipeCommand = recipeService.saveRecipeCommand(recipeCommand);
 
         return "redirect:/recipe/" + savedRecipeCommand.getId() + "/show";
     }
 
     @GetMapping("recipe/{id}/update")
-    public String updateRecipe(@PathVariable Long id, @NotNull Model model) {
+    public String updateRecipeForm(@PathVariable Long id, @NotNull Model model) {
         model.addAttribute("recipe", recipeService.findCommandById(id));
 
-        return "recipe/form";
+        return FORM_URL;
     }
 
     @DeleteMapping("recipe/{id}")
