@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-3 form-group" th:class="${#fields.hasErrors('prepTime')} ?
+                                    <div class="col-md-3 form-group" th:class="${#fields.hasErrors('servings')} ?
                                             'col-md-3 form-group has-error'
                                             : 'col-md-3 form-group'">
                                         <label>Servings:</label>
@@ -118,7 +118,7 @@
                                         <label>Source:</label>
                                         <input type="text" class="form-control" th:field="*{source}"/>
                                     </div>
-                                    <div class="col-md-3 form-group" th:class="${#fields.hasErrors('prepTime')} ?
+                                    <div class="col-md-3 form-group" th:class="${#fields.hasErrors('url')} ?
                                             'col-md-3 form-group has-error'
                                             : 'col-md-3 form-group'">
                                         <label>URL:</label>

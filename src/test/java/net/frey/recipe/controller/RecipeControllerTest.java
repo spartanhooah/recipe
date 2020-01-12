@@ -116,8 +116,6 @@ public class RecipeControllerTest {
         RecipeCommand recipeCommand = new RecipeCommand();
         recipeCommand.setId(2L);
 
-        when(recipeService.saveRecipeCommand(any())).thenReturn(recipeCommand);
-
         mockMvc.perform(
                 post("/recipe")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
