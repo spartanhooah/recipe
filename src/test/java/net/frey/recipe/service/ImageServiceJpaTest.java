@@ -3,7 +3,7 @@ package net.frey.recipe.service;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentCaptor.forClass;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -29,7 +29,7 @@ public class ImageServiceJpaTest {
 
     @Test
     public void saveImageFile() throws IOException {
-        Long id = 1L;
+        String id = "1";
         MultipartFile multipartFile =
                 new MockMultipartFile(
                         "imagefile",
@@ -41,7 +41,7 @@ public class ImageServiceJpaTest {
         recipe.setId(id);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
 
         ArgumentCaptor<Recipe> argumentCaptor = forClass(Recipe.class);
 

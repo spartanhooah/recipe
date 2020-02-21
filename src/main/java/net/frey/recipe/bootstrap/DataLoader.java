@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 import net.frey.recipe.domain.Category;
 import net.frey.recipe.domain.Difficulty;
@@ -15,12 +18,14 @@ import net.frey.recipe.repository.CategoryRepository;
 import net.frey.recipe.repository.RecipeRepository;
 import net.frey.recipe.repository.UnitOfMeasureRepository;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
+@Profile("default")
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
@@ -38,6 +43,14 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        loadCategories();
+        loadUnitsOfMeasure();
+        recipeRepository.saveAll(getRecipes());
+    }
+
+    private List<Recipe> getRecipes() {
+        List<Recipe> recipeList = new ArrayList<>();
+
         UnitOfMeasure tablespoon = unitOfMeasureRepository.findByDescription("Tablespoon").get();
         UnitOfMeasure teaspoon = unitOfMeasureRepository.findByDescription("Teaspoon").get();
         UnitOfMeasure each = unitOfMeasureRepository.findByDescription("Each").get();
@@ -73,121 +86,101 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         anchoChiliPowder.setDescription("ancho chili powder");
         anchoChiliPowder.setAmount(BigDecimal.valueOf(2));
         anchoChiliPowder.setUnitOfMeasure(tablespoon);
-        anchoChiliPowder.setRecipe(chickenTacos);
 
         Ingredient oregano = new Ingredient();
         oregano.setDescription("dried oregano");
         oregano.setAmount(BigDecimal.ONE);
         oregano.setUnitOfMeasure(teaspoon);
-        oregano.setRecipe(chickenTacos);
 
         Ingredient cumin = new Ingredient();
         cumin.setDescription("dried cumin");
         cumin.setAmount(BigDecimal.ONE);
         cumin.setUnitOfMeasure(teaspoon);
-        cumin.setRecipe(chickenTacos);
 
         Ingredient sugar = new Ingredient();
         sugar.setDescription("sugar");
         sugar.setAmount(BigDecimal.ONE);
         sugar.setUnitOfMeasure(teaspoon);
-        sugar.setRecipe(chickenTacos);
 
         Ingredient salt = new Ingredient();
         salt.setDescription("salt");
         salt.setAmount(BigDecimal.valueOf(0.5));
         salt.setUnitOfMeasure(tablespoon);
-        salt.setRecipe(chickenTacos);
 
         Ingredient garlic = new Ingredient();
         garlic.setDescription("garlic clove, finely chopped");
         garlic.setAmount(BigDecimal.ONE);
         garlic.setUnitOfMeasure(each);
-        garlic.setRecipe(chickenTacos);
 
         Ingredient orangeZest = new Ingredient();
         orangeZest.setDescription("finely-grated orange zest");
         orangeZest.setAmount(BigDecimal.ONE);
         orangeZest.setUnitOfMeasure(tablespoon);
-        orangeZest.setRecipe(chickenTacos);
 
         Ingredient orangeJuice = new Ingredient();
         orangeJuice.setDescription("fresh-squeezed orange juice");
         orangeJuice.setAmount(BigDecimal.valueOf(3L));
         orangeJuice.setUnitOfMeasure(tablespoon);
-        orangeJuice.setRecipe(chickenTacos);
 
         Ingredient oliveOil = new Ingredient();
         oliveOil.setDescription("olive oil");
         oliveOil.setAmount(BigDecimal.valueOf(2L));
         oliveOil.setUnitOfMeasure(tablespoon);
-        oliveOil.setRecipe(chickenTacos);
 
         Ingredient chicken = new Ingredient();
         chicken.setDescription("skinless, boneless chicken thighs");
         chicken.setAmount(BigDecimal.valueOf(5L));
         chicken.setUnitOfMeasure(each);
-        chicken.setRecipe(chickenTacos);
 
         Ingredient tortillas = new Ingredient();
         tortillas.setDescription("small corn tortillas");
         tortillas.setAmount(BigDecimal.valueOf(8L));
         tortillas.setUnitOfMeasure(each);
-        tortillas.setRecipe(chickenTacos);
 
         Ingredient arugula = new Ingredient();
         arugula.setDescription("packed baby arugula");
         arugula.setAmount(BigDecimal.valueOf(3L));
         arugula.setUnitOfMeasure(cup);
-        arugula.setRecipe(chickenTacos);
 
         Ingredient avocado = new Ingredient();
         avocado.setDescription("medium ripe avocados");
         avocado.setAmount(BigDecimal.valueOf(2L));
         avocado.setUnitOfMeasure(each);
-        avocado.setRecipe(chickenTacos);
 
         Ingredient radish = new Ingredient();
         radish.setDescription("radishes, thinly sliced");
         radish.setAmount(BigDecimal.valueOf(4L));
         radish.setUnitOfMeasure(each);
-        radish.setRecipe(chickenTacos);
 
         Ingredient tomatoes = new Ingredient();
         tomatoes.setDescription("cherry tomatoes, halved");
         tomatoes.setAmount(BigDecimal.valueOf(0.5));
         tomatoes.setUnitOfMeasure(pint);
-        tomatoes.setRecipe(chickenTacos);
 
         Ingredient redOnion = new Ingredient();
         redOnion.setDescription("red onion, thinly sliced");
         redOnion.setAmount(BigDecimal.valueOf(0.25));
         redOnion.setUnitOfMeasure(each);
-        redOnion.setRecipe(chickenTacos);
 
         Ingredient cilantro = new Ingredient();
         cilantro.setDescription("roughly chopped cilantro");
         cilantro.setAmount(BigDecimal.ONE);
         cilantro.setUnitOfMeasure(each);
-        cilantro.setRecipe(chickenTacos);
 
         Ingredient sourCream = new Ingredient();
         sourCream.setDescription("sour cream, thinned with milk");
         sourCream.setAmount(BigDecimal.valueOf(0.5));
         sourCream.setUnitOfMeasure(cup);
-        sourCream.setRecipe(chickenTacos);
 
         Ingredient milk = new Ingredient();
         milk.setDescription("milk");
         milk.setAmount(BigDecimal.valueOf(0.25));
         milk.setUnitOfMeasure(cup);
-        milk.setRecipe(chickenTacos);
 
         Ingredient lime = new Ingredient();
         lime.setDescription("lime, cut into wedges");
         lime.setAmount(BigDecimal.ONE);
         lime.setUnitOfMeasure(each);
-        lime.setRecipe(chickenTacos);
 
         chickenTacos
                 .getIngredients()
@@ -214,7 +207,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
                                 milk,
                                 lime));
 
-        recipeRepository.save(chickenTacos);
+        recipeList.add(chickenTacos);
 
         Recipe guacamole = new Recipe();
         guacamole.setTitle("Guacamole");
@@ -240,49 +233,41 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         kosherSalt.setDescription("Kosher salt");
         kosherSalt.setAmount(BigDecimal.valueOf(0.5));
         kosherSalt.setUnitOfMeasure(teaspoon);
-        kosherSalt.setRecipe(guacamole);
 
         Ingredient juice = new Ingredient();
         juice.setDescription("fresh lime or lemon juice");
         juice.setAmount(BigDecimal.ONE);
         juice.setUnitOfMeasure(tablespoon);
-        juice.setRecipe(guacamole);
 
         Ingredient onion = new Ingredient();
         onion.setDescription("minced red onion or thinly sliced green onion");
         onion.setAmount(BigDecimal.valueOf(3));
         onion.setUnitOfMeasure(tablespoon);
-        onion.setRecipe(guacamole);
 
         Ingredient chili = new Ingredient();
         chili.setDescription("serrano chiles, stems and seeds removed, minced");
         chili.setAmount(BigDecimal.ONE);
         chili.setUnitOfMeasure(each);
-        chili.setRecipe(guacamole);
 
         Ingredient cilantro2 = new Ingredient();
         cilantro2.setDescription("cilantro, finely chopped");
         cilantro2.setAmount(BigDecimal.valueOf(2));
         cilantro2.setUnitOfMeasure(tablespoon);
-        cilantro2.setRecipe(guacamole);
 
         Ingredient blackPepper = new Ingredient();
         blackPepper.setDescription("freshly grated black pepper");
         blackPepper.setAmount(BigDecimal.ONE);
         blackPepper.setUnitOfMeasure(dash);
-        blackPepper.setRecipe(guacamole);
 
         Ingredient tomato = new Ingredient();
         tomato.setDescription("ripe tomato, seeds and pulp removed, chopped");
         tomato.setAmount(BigDecimal.valueOf(0.5));
         tomato.setUnitOfMeasure(each);
-        tomato.setRecipe(guacamole);
 
         Ingredient avocado2 = new Ingredient();
         avocado2.setDescription("ripe avocado");
         avocado2.setAmount(BigDecimal.valueOf(2));
         avocado2.setUnitOfMeasure(each);
-        avocado2.setRecipe(guacamole);
 
         guacamole
                 .getIngredients()
@@ -297,7 +282,61 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
                                 tomato,
                                 avocado2));
 
-        recipeRepository.save(guacamole);
+        recipeList.add(guacamole);
+
+        return recipeList;
+    }
+
+    private void loadUnitsOfMeasure() {
+        UnitOfMeasure teaspoon = new UnitOfMeasure();
+        teaspoon.setDescription("Teaspoon");
+        unitOfMeasureRepository.save(teaspoon);
+
+        UnitOfMeasure tablespoon = new UnitOfMeasure();
+        tablespoon.setDescription("Tablespoon");
+        unitOfMeasureRepository.save(tablespoon);
+
+        UnitOfMeasure cup = new UnitOfMeasure();
+        cup.setDescription("Cup");
+        unitOfMeasureRepository.save(cup);
+
+        UnitOfMeasure pinch = new UnitOfMeasure();
+        pinch.setDescription("Pinch");
+        unitOfMeasureRepository.save(pinch);
+
+        UnitOfMeasure ounce = new UnitOfMeasure();
+        ounce.setDescription("Ounce");
+        unitOfMeasureRepository.save(ounce);
+
+        UnitOfMeasure each = new UnitOfMeasure();
+        each.setDescription("Each");
+        unitOfMeasureRepository.save(each);
+
+        UnitOfMeasure pint = new UnitOfMeasure();
+        pint.setDescription("Pint");
+        unitOfMeasureRepository.save(pint);
+
+        UnitOfMeasure dash = new UnitOfMeasure();
+        dash.setDescription("Dash");
+        unitOfMeasureRepository.save(dash);
+    }
+
+    private void loadCategories() {
+        Category american = new Category();
+        american.setDescription("American");
+        categoryRepository.save(american);
+
+        Category italian = new Category();
+        italian.setDescription("Italian");
+        categoryRepository.save(italian);
+
+        Category mexican = new Category();
+        mexican.setDescription("Mexican");
+        categoryRepository.save(mexican);
+
+        Category fastFood = new Category();
+        fastFood.setDescription("Fast Food");
+        categoryRepository.save(fastFood);
     }
 
     public byte[] extractBytes(String imageName) throws IOException {

@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 
 @Data
 public class RecipeCommand {
-    private Long id;
+    private String id;
 
     @NotBlank
     @Size(min = 3, max = 255)

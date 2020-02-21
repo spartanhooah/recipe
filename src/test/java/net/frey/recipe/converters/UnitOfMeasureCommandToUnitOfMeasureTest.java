@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class UnitOfMeasureCommandToUnitOfMeasureTest {
     private static final String DESCRIPTION = "unit";
-    private static final long ID = 1L;
+    private static final String ID = "1";
     private UnitOfMeasureCommandToUnitOfMeasure converter;
 
     @Before

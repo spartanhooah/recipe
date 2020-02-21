@@ -18,7 +18,7 @@ public class ImageServiceJpa implements ImageService {
     }
 
     @Override
-    public void saveImageFile(Long id, MultipartFile file) {
+    public void saveImageFile(String id, MultipartFile file) {
         try {
             Optional<Recipe> recipeOptional = recipeRepository.findById(id);
 

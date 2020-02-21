@@ -1,25 +1,22 @@
 package net.frey.recipe.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
+@Document
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+    @DBRef
     private Set<Recipe> recipes = new HashSet<>();
 
     private String description;

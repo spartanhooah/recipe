@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CategoryTest {
-    private static final Long ID = 4L;
+    private static final String ID = "4";
     private Category category;
 
     @Before

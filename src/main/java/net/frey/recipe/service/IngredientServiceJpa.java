@@ -26,10 +26,10 @@ public class IngredientServiceJpa implements IngredientService {
 
     @Override
     @Transactional
-    public IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {
+    public IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String ingredientId) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
-        if (!recipeOptional.isPresent()) {
+        if (recipeOptional.isEmpty()) {
             // TODO: implement error handling
             throw new RuntimeException("Recipe ID " + recipeId + " was not found.");
         } else {
@@ -41,7 +41,7 @@ public class IngredientServiceJpa implements IngredientService {
                             .map(ingredientToIngredientCommand::convert)
                             .findFirst();
 
-            if (!ingredientCommandOptional.isPresent()) {
+            if (ingredientCommandOptional.isEmpty()) {
                 // TODO: implement error handling
                 log.error("Ingredient ID {} was not found.", ingredientId);
             }
@@ -86,7 +86,6 @@ public class IngredientServiceJpa implements IngredientService {
                                                                         .getId())));
             } else {
                 Ingredient ingredient = ingredientCommandToIngredient.convert(ingredientCommand);
-                ingredient.setRecipe(recipe);
                 recipe.addIngredient(ingredient);
             }
 
@@ -132,7 +131,7 @@ public class IngredientServiceJpa implements IngredientService {
     }
 
     @Override
-    public void deleteById(Long ingredientId) {
+    public void deleteById(String ingredientId) {
         ingredientRepository.deleteById(ingredientId);
     }
 }

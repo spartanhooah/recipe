@@ -1,6 +1,5 @@
 package net.frey.recipe.controller;
 
-import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.frey.recipe.command.IngredientCommand;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.constraints.NotNull;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class IngredientController {
     private final UnitOfMeasureService unitOfMeasureService;
 
     @GetMapping("/recipe/{recipeId}/ingredients")
-    public String listIngredients(@PathVariable Long recipeId, @NotNull Model model) {
+    public String listIngredients(@PathVariable String recipeId, @NotNull Model model) {
         model.addAttribute("recipe", recipeService.findCommandById(recipeId));
 
         return "recipe/ingredient/list";
@@ -34,7 +35,7 @@ public class IngredientController {
 
     @GetMapping("/recipe/{recipeId}/ingredient/{ingredientId}/show")
     public String showIngredient(
-            @PathVariable Long recipeId, @PathVariable Long ingredientId, @NotNull Model model) {
+            @PathVariable String recipeId, @PathVariable String ingredientId, @NotNull Model model) {
         log.info("showing ingredient with id " + ingredientId);
         model.addAttribute(
                 "ingredient",
@@ -45,7 +46,7 @@ public class IngredientController {
 
     @GetMapping("/recipe/{recipeId}/ingredient/{ingredientId}/update")
     public String updateIngredientForm(
-            @PathVariable Long recipeId, @PathVariable Long ingredientId, @NotNull Model model) {
+            @PathVariable String recipeId, @PathVariable String ingredientId, @NotNull Model model) {
         model.addAttribute(
                 "ingredient",
                 ingredientService.findByRecipeIdAndIngredientId(recipeId, ingredientId));
@@ -59,8 +60,8 @@ public class IngredientController {
         IngredientCommand savedIngredientCommand =
                 ingredientService.saveIngredientCommand(ingredientCommand);
 
-        Long recipeId = savedIngredientCommand.getRecipeId();
-        Long ingredientCommandId = savedIngredientCommand.getId();
+        String recipeId = savedIngredientCommand.getRecipeId();
+        String ingredientCommandId = savedIngredientCommand.getId();
         log.debug("Saved recipe ID: {}", recipeId);
         log.debug("Saved ingredient ID: {}", ingredientCommandId);
 
@@ -68,7 +69,7 @@ public class IngredientController {
     }
 
     @GetMapping("recipe/{recipeId}/ingredient/new")
-    public String newRecipeForm(@PathVariable Long recipeId, @NotNull Model model) {
+    public String newRecipeForm(@PathVariable String recipeId, @NotNull Model model) {
         RecipeCommand recipeCommand = recipeService.findCommandById(recipeId);
         // TODO: throw exception if recipeCommand is null
         IngredientCommand ingredientCommand = new IngredientCommand();
@@ -82,7 +83,7 @@ public class IngredientController {
     }
 
     @DeleteMapping("recipe/{recipeId}/ingredient/{ingredientId}")
-    public String deleteIngredient(@PathVariable Long recipeId, @PathVariable Long ingredientId) {
+    public String deleteIngredient(@PathVariable String recipeId, @PathVariable String ingredientId) {
         ingredientService.deleteById(ingredientId);
 
         return "redirect:/recipe/" + recipeId + "/ingredients";

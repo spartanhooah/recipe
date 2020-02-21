@@ -32,7 +32,7 @@ public class RecipeServiceJpa implements RecipeService {
 
     @Override
     @Transactional
-    public Recipe findById(Long id) {
+    public Recipe findById(String id) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
 
         if (!recipeOptional.isPresent()) {
@@ -48,7 +48,7 @@ public class RecipeServiceJpa implements RecipeService {
     }
 
     @Override
-    public Recipe findByIdFullyPopulated(Long id) {
+    public Recipe findByIdFullyPopulated(String id) {
         Recipe recipe = this.findById(id);
 
         // To non-lazily load (I think)
@@ -71,12 +71,12 @@ public class RecipeServiceJpa implements RecipeService {
 
     @Override
     @Transactional
-    public RecipeCommand findCommandById(Long id) {
+    public RecipeCommand findCommandById(String id) {
         return recipeToRecipeCommand.convert(findById(id));
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         recipeRepository.deleteById(id);
     }
 }

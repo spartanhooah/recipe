@@ -1,7 +1,7 @@
 package net.frey.recipe.controller;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,6 +17,7 @@ import net.frey.recipe.domain.Recipe;
 import net.frey.recipe.exception.NotFoundException;
 import net.frey.recipe.service.RecipeService;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -28,9 +29,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RecipeControllerTest {
-    private static final Long DEFAULT_ID = 1L;
+    private static final String DEFAULT_ID = "1";
     private MockMvc mockMvc;
-    private RecipeCommand recipeCommand;
 
     @Mock private RecipeService recipeService;
 
@@ -43,16 +43,16 @@ public class RecipeControllerTest {
                 .setControllerAdvice(new ControllerExceptionHandler())
                 .build();
 
-        recipeCommand = new RecipeCommand();
+        RecipeCommand recipeCommand = new RecipeCommand();
         recipeCommand.setId(DEFAULT_ID);
     }
 
     @Test
     public void getRecipe() throws Exception {
         Recipe recipe = new Recipe();
-        recipe.setId(1L);
+        recipe.setId(DEFAULT_ID);
 
-        when(recipeService.findById(anyLong())).thenReturn(recipe);
+        when(recipeService.findById(anyString())).thenReturn(recipe);
 
         mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isOk())
@@ -71,7 +71,7 @@ public class RecipeControllerTest {
     @Test
     public void postNewRecipeForm() throws Exception {
         RecipeCommand recipeCommand = new RecipeCommand();
-        recipeCommand.setId(2L);
+        recipeCommand.setId("2");
 
         when(recipeService.saveRecipeCommand(any())).thenReturn(recipeCommand);
 
@@ -92,18 +92,19 @@ public class RecipeControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
 
-        verify(recipeService, times(1)).deleteById(1L);
+        verify(recipeService, times(1)).deleteById(DEFAULT_ID);
     }
 
     @Test
     public void recipeNotFoundReturns404() throws Exception {
-        when(recipeService.findById(anyLong())).thenThrow(new NotFoundException());
+        when(recipeService.findById(anyString())).thenThrow(new NotFoundException());
 
         mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isNotFound())
                 .andExpect(view().name("404error"));
     }
 
+    @Ignore
     @Test
     public void getRecipeNumberFormatError() throws Exception {
         mockMvc.perform(get("/recipe/asdf/show"))
@@ -114,7 +115,7 @@ public class RecipeControllerTest {
     @Test
     public void postRecipeFailsValidation() throws Exception {
         RecipeCommand recipeCommand = new RecipeCommand();
-        recipeCommand.setId(2L);
+        recipeCommand.setId("2");
 
         mockMvc.perform(
                 post("/recipe")

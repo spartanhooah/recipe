@@ -3,7 +3,7 @@ package net.frey.recipe.service;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -51,21 +51,21 @@ public class RecipeServiceJpaTest {
     @Test
     public void getRecipeById() {
         Recipe recipe = new Recipe();
-        recipe.setId(1L);
+        recipe.setId("1");
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
 
-        Recipe returnedRecipe = recipeServiceJpa.findById(1L);
+        Recipe returnedRecipe = recipeServiceJpa.findById("1");
 
         assertThat(returnedRecipe, is(notNullValue()));
-        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, times(1)).findById(anyString());
         verify(recipeRepository, never()).findAll();
     }
 
     @Test
     public void deleteRecipeById() {
-        Long idToDelete = 2L;
+        String idToDelete = "2";
         recipeServiceJpa.deleteById(idToDelete);
 
         verify(recipeRepository, times(1)).deleteById(idToDelete);
@@ -75,8 +75,8 @@ public class RecipeServiceJpaTest {
     public void getRecipeIdNotFound() {
         Optional<Recipe> recipe = Optional.empty();
 
-        when(recipeRepository.findById(anyLong())).thenReturn(recipe);
+        when(recipeRepository.findById(anyString())).thenReturn(recipe);
 
-        recipeServiceJpa.findById(1L);
+        recipeServiceJpa.findById("1");
     }
 }
