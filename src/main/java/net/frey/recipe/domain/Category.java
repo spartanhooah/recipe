@@ -6,8 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,7 +17,7 @@ public class Category {
     private String id;
 
     @DBRef
-    private Set<Recipe> recipes = new HashSet<>();
+    private List<Recipe> recipes = new LinkedList<>();
 
     private String description;
 }

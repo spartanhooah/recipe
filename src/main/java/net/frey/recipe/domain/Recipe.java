@@ -1,13 +1,14 @@
 package net.frey.recipe.domain;
 
-import java.util.HashSet;
-import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.LinkedList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,12 +26,12 @@ public class Recipe {
     private String url;
     private String directions;
     private Difficulty difficulty;
-    private Set<Ingredient> ingredients = new HashSet<>();
+    private List<Ingredient> ingredients = new LinkedList<>();
     private Byte[] image;
     private Notes notes;
 
     @DBRef
-    private Set<Category> categories = new HashSet<>();
+    private List<Category> categories = new LinkedList<>();
 
     @Override
     public String toString() {

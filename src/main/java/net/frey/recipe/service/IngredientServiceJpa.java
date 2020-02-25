@@ -46,7 +46,10 @@ public class IngredientServiceJpa implements IngredientService {
                 log.error("Ingredient ID {} was not found.", ingredientId);
             }
 
-            return ingredientCommandOptional.get();
+            IngredientCommand ingredientCommand = ingredientCommandOptional.get();
+            ingredientCommand.setRecipeId(recipeId);
+
+            return ingredientCommand;
         }
     }
 
@@ -56,7 +59,7 @@ public class IngredientServiceJpa implements IngredientService {
         Optional<Recipe> recipeOptional =
                 recipeRepository.findById(ingredientCommand.getRecipeId());
 
-        if (!recipeOptional.isPresent()) {
+        if (recipeOptional.isEmpty()) {
             // TODO: implement error handling
             throw new RuntimeException(
                     "Recipe not found for ID " + ingredientCommand.getRecipeId());
@@ -100,7 +103,7 @@ public class IngredientServiceJpa implements IngredientService {
                                                     .equals(ingredientCommand.getId()))
                             .findFirst();
 
-            if (!savedIngredientOptional.isPresent()) {
+            if (savedIngredientOptional.isEmpty()) {
                 savedIngredientOptional =
                         savedRecipe.getIngredients().stream()
                                 .filter(
@@ -126,7 +129,11 @@ public class IngredientServiceJpa implements IngredientService {
             }
 
             // TODO: check for fail
-            return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
+
+            IngredientCommand ingredientCommandSaved = ingredientToIngredientCommand.convert(savedIngredientOptional.get());
+            ingredientCommandSaved.setRecipeId(recipe.getId());
+
+            return ingredientCommandSaved;
         }
     }
 

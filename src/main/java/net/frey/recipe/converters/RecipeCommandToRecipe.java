@@ -45,12 +45,12 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
         recipe.setCategories(
                 source.getCategories().stream()
                         .map(categoryConverter::convert)
-                        .collect(Collectors.toSet()));
+                        .collect(Collectors.toList()));
         recipe.setNotes(Objects.requireNonNull(notesConverter.convert(source.getNotes())));
         recipe.setIngredients(
                 source.getIngredients().stream()
                         .map(ingredientConverter::convert)
-                        .collect(Collectors.toSet()));
+                        .collect(Collectors.toList()));
         recipe.setImage(source.getImage());
 
         return recipe;

@@ -58,9 +58,9 @@ public class DataLoaderMySQL implements ApplicationListener<ContextRefreshedEven
     }
 
     private void loadUOM() {
-        UnitOfMeasure uom1 = new UnitOfMeasure();
-        uom1.setDescription("Teaspoon");
-        unitOfMeasureRepository.save(uom1);
+        UnitOfMeasure teaspoon = new UnitOfMeasure();
+        teaspoon.setDescription("Teaspoon");
+        unitOfMeasureRepository.save(teaspoon);
 
         UnitOfMeasure tablespoon = new UnitOfMeasure();
         tablespoon.setDescription("Tablespoon");

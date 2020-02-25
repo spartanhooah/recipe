@@ -1,7 +1,5 @@
 package net.frey.recipe.command;
 
-import java.util.HashSet;
-import java.util.Set;
 import lombok.Data;
 import net.frey.recipe.domain.Difficulty;
 import org.hibernate.validator.constraints.URL;
@@ -11,6 +9,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.LinkedList;
+import java.util.List;
 
 @Data
 public class RecipeCommand {
@@ -40,9 +40,9 @@ public class RecipeCommand {
     private String directions;
 
     private String source;
-    private Set<IngredientCommand> ingredients = new HashSet<>();
+    private List<IngredientCommand> ingredients = new LinkedList<>();
     private Difficulty difficulty;
     private NotesCommand notes;
-    private Set<CategoryCommand> categories = new HashSet<>();
+    private List<CategoryCommand> categories = new LinkedList<>();
     private Byte[] image;
 }

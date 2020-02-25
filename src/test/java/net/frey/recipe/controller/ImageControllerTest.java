@@ -4,7 +4,6 @@ import net.frey.recipe.command.RecipeCommand;
 import net.frey.recipe.service.ImageService;
 import net.frey.recipe.service.RecipeService;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -26,7 +25,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ImageControllerTest {
@@ -96,13 +94,5 @@ public class ImageControllerTest {
         byte[] responseBytes = response.getContentAsByteArray();
 
         assertThat(s.getBytes().length, is(responseBytes.length));
-    }
-
-    @Ignore
-    @Test
-    public void getImageNumberFormatError() throws Exception {
-        mockMvc.perform(get("/recipe/asdf/image"))
-                .andExpect(status().isBadRequest())
-                .andExpect(view().name("400error"));
     }
 }

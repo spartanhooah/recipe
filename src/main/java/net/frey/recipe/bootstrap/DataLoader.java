@@ -6,7 +6,10 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import lombok.extern.slf4j.Slf4j;
 import net.frey.recipe.domain.Category;
@@ -60,6 +63,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
         Category mexican = categoryRepository.findByDescription("Mexican").get();
 
+        List<Category> currentCategories = new LinkedList<>();
+        currentCategories.add(mexican);
+
         Recipe chickenTacos = new Recipe();
         chickenTacos.setTitle("Spicy grilled chicken tacos");
         chickenTacos.setDescription(
@@ -67,6 +73,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         chickenTacos.setCookTime(15);
         chickenTacos.setPrepTime(20);
         chickenTacos.setServings(5);
+        chickenTacos.setCategories(currentCategories);
         chickenTacos.setSource("Simply Recipes");
         chickenTacos.setUrl("https://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
         chickenTacos.setDirections(
@@ -217,6 +224,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         guacamole.setPrepTime(10);
         guacamole.setServings(3);
         guacamole.setSource("Simply Recipes");
+        guacamole.setCategories(currentCategories);
         guacamole.setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
         guacamole.setDirections(
                 "1 Cut avocado, remove flesh: Cut the avocados in half. Remove seed. Score the inside of the avocado with a blunt knife and scoop out the flesh with a spoon. (See How to Cut and Peel an Avocado.) Place in a bowl.\n"
