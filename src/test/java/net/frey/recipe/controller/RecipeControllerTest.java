@@ -1,5 +1,17 @@
 package net.frey.recipe.controller;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
 import net.frey.recipe.command.RecipeCommand;
 import net.frey.recipe.domain.Recipe;
 import net.frey.recipe.exception.NotFoundException;
@@ -14,18 +26,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
 @RunWith(MockitoJUnitRunner.class)
 public class RecipeControllerTest {
     private static final String DEFAULT_ID = "1";
@@ -38,9 +38,10 @@ public class RecipeControllerTest {
     @Before
     public void setUp() {
         recipeController = new RecipeController(recipeService);
-        mockMvc = MockMvcBuilders.standaloneSetup(recipeController)
-                .setControllerAdvice(new ControllerExceptionHandler())
-                .build();
+        mockMvc =
+                MockMvcBuilders.standaloneSetup(recipeController)
+                        .setControllerAdvice(new ControllerExceptionHandler())
+                        .build();
 
         RecipeCommand recipeCommand = new RecipeCommand();
         recipeCommand.setId(DEFAULT_ID);
@@ -109,10 +110,10 @@ public class RecipeControllerTest {
         recipeCommand.setId("2");
 
         mockMvc.perform(
-                post("/recipe")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("id", "")
-                        .param("description", "some string"))
+                        post("/recipe")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("id", "")
+                                .param("description", "some string"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/form"));
     }

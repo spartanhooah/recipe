@@ -130,7 +130,8 @@ public class IngredientServiceJpa implements IngredientService {
 
             // TODO: check for fail
 
-            IngredientCommand ingredientCommandSaved = ingredientToIngredientCommand.convert(savedIngredientOptional.get());
+            IngredientCommand ingredientCommandSaved =
+                    ingredientToIngredientCommand.convert(savedIngredientOptional.get());
             ingredientCommandSaved.setRecipeId(recipe.getId());
 
             return ingredientCommandSaved;

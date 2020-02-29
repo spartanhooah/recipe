@@ -1,18 +1,5 @@
 package net.frey.recipe.controller;
 
-import net.frey.recipe.command.RecipeCommand;
-import net.frey.recipe.service.ImageService;
-import net.frey.recipe.service.RecipeService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -26,6 +13,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import net.frey.recipe.command.RecipeCommand;
+import net.frey.recipe.service.ImageService;
+import net.frey.recipe.service.RecipeService;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 @RunWith(MockitoJUnitRunner.class)
 public class ImageControllerTest {
     @Mock private ImageService imageService;
@@ -36,9 +36,10 @@ public class ImageControllerTest {
     @Before
     public void setUp() {
         ImageController imageController = new ImageController(imageService, recipeService);
-        mockMvc = MockMvcBuilders.standaloneSetup(imageController)
-                .setControllerAdvice(new ControllerExceptionHandler())
-                .build();
+        mockMvc =
+                MockMvcBuilders.standaloneSetup(imageController)
+                        .setControllerAdvice(new ControllerExceptionHandler())
+                        .build();
     }
 
     @Test

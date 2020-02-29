@@ -1,25 +1,27 @@
-package net.frey.recipe.repository;
+package net.frey.recipe.repository.reactive;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
-import java.util.Optional;
 import net.frey.recipe.bootstrap.DataLoader;
-import net.frey.recipe.domain.UnitOfMeasure;
-import net.frey.recipe.repository.reactive.CategoryReactiveRepository;
-import net.frey.recipe.repository.reactive.RecipeReactiveRepository;
-import net.frey.recipe.repository.reactive.UnitOfMeasureReactiveRepository;
+import net.frey.recipe.domain.Category;
+import net.frey.recipe.repository.CategoryRepository;
+import net.frey.recipe.repository.RecipeRepository;
+import net.frey.recipe.repository.UnitOfMeasureRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 @RunWith(SpringRunner.class)
 @DataMongoTest
-public class UnitOfMeasureRepositoryIT {
-    @Autowired private UnitOfMeasureRepository unitOfMeasureRepository;
+public class CategoryReactiveRepositoryIT {
+    @Autowired
+    private UnitOfMeasureRepository unitOfMeasureRepository;
     @Autowired private CategoryRepository categoryRepository;
     @Autowired private RecipeRepository recipeRepository;
     @Autowired private UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
@@ -31,6 +33,9 @@ public class UnitOfMeasureRepositoryIT {
         recipeRepository.deleteAll();
         unitOfMeasureRepository.deleteAll();
         categoryRepository.deleteAll();
+        unitOfMeasureReactiveRepository.deleteAll();
+        categoryReactiveRepository.deleteAll();
+        recipeReactiveRepository.deleteAll();
 
         DataLoader dataLoader =
                 new DataLoader(
@@ -45,16 +50,14 @@ public class UnitOfMeasureRepositoryIT {
     }
 
     @Test
-    public void findCupByDescription() {
-        Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Cup");
+    public void roundTripTest() {
+        Category input = new Category();
+        input.setDescription("test");
+        input.setId("1");
 
-        assertThat(uomOptional.get().getDescription(), is("Cup"));
-    }
+        categoryReactiveRepository.save(input).block();
+        Flux<Category> results = categoryReactiveRepository.findAll();
 
-    @Test
-    public void findTeaspoonByDescription() {
-        Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
-
-        assertThat(uomOptional.get().getDescription(), is("Teaspoon"));
+        assertThat(results.any(category -> category.getDescription().equals("test")).block(), is(true));
     }
 }

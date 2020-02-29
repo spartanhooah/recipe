@@ -42,7 +42,9 @@ public class RecipeController {
     }
 
     @PostMapping("recipe")
-    public String saveRecipe(@Valid @ModelAttribute("recipe") RecipeCommand recipeCommand, BindingResult bindingResult) {
+    public String saveRecipe(
+            @Valid @ModelAttribute("recipe") RecipeCommand recipeCommand,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(objectError -> log.debug(objectError.toString()));
 
@@ -78,6 +80,6 @@ public class RecipeController {
         modelAndView.setViewName("404error");
         modelAndView.addObject("exception", e);
 
-        return  modelAndView;
+        return modelAndView;
     }
 }

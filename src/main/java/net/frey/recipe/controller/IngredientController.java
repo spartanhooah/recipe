@@ -1,5 +1,6 @@
 package net.frey.recipe.controller;
 
+import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.frey.recipe.command.IngredientCommand;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.validation.constraints.NotNull;
 
 @Slf4j
 @Controller
@@ -35,7 +34,9 @@ public class IngredientController {
 
     @GetMapping("/recipe/{recipeId}/ingredient/{ingredientId}/show")
     public String showIngredient(
-            @PathVariable String recipeId, @PathVariable String ingredientId, @NotNull Model model) {
+            @PathVariable String recipeId,
+            @PathVariable String ingredientId,
+            @NotNull Model model) {
         log.info("showing ingredient with id " + ingredientId);
         model.addAttribute(
                 "ingredient",
@@ -46,7 +47,9 @@ public class IngredientController {
 
     @GetMapping("/recipe/{recipeId}/ingredient/{ingredientId}/update")
     public String updateIngredientForm(
-            @PathVariable String recipeId, @PathVariable String ingredientId, @NotNull Model model) {
+            @PathVariable String recipeId,
+            @PathVariable String ingredientId,
+            @NotNull Model model) {
         model.addAttribute(
                 "ingredient",
                 ingredientService.findByRecipeIdAndIngredientId(recipeId, ingredientId));
@@ -83,7 +86,8 @@ public class IngredientController {
     }
 
     @DeleteMapping("recipe/{recipeId}/ingredient/{ingredientId}")
-    public String deleteIngredient(@PathVariable String recipeId, @PathVariable String ingredientId) {
+    public String deleteIngredient(
+            @PathVariable String recipeId, @PathVariable String ingredientId) {
         ingredientService.deleteById(ingredientId);
 
         return "redirect:/recipe/" + recipeId + "/ingredients";

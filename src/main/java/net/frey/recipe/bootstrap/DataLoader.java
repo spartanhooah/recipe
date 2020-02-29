@@ -6,11 +6,8 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-
 import lombok.extern.slf4j.Slf4j;
 import net.frey.recipe.domain.Category;
 import net.frey.recipe.domain.Difficulty;
@@ -20,6 +17,9 @@ import net.frey.recipe.domain.UnitOfMeasure;
 import net.frey.recipe.repository.CategoryRepository;
 import net.frey.recipe.repository.RecipeRepository;
 import net.frey.recipe.repository.UnitOfMeasureRepository;
+import net.frey.recipe.repository.reactive.CategoryReactiveRepository;
+import net.frey.recipe.repository.reactive.RecipeReactiveRepository;
+import net.frey.recipe.repository.reactive.UnitOfMeasureReactiveRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -33,14 +33,23 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
     private final CategoryRepository categoryRepository;
+    private final UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
+    private final CategoryReactiveRepository categoryReactiveRepository;
+    private final RecipeReactiveRepository recipeReactiveRepository;
 
     public DataLoader(
             RecipeRepository recipeRepository,
             UnitOfMeasureRepository unitOfMeasureRepository,
-            CategoryRepository categoryRepository) {
+            CategoryRepository categoryRepository,
+            UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository,
+            CategoryReactiveRepository categoryReactiveRepository,
+            RecipeReactiveRepository recipeReactiveRepository) {
         this.recipeRepository = recipeRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
         this.categoryRepository = categoryRepository;
+        this.unitOfMeasureReactiveRepository = unitOfMeasureReactiveRepository;
+        this.categoryReactiveRepository = categoryReactiveRepository;
+        this.recipeReactiveRepository = recipeReactiveRepository;
     }
 
     @Override
@@ -49,6 +58,14 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         loadCategories();
         loadUnitsOfMeasure();
         recipeRepository.saveAll(getRecipes());
+
+        log.error("##################");
+        log.error(
+                "Count of units of measure: "
+                        + unitOfMeasureReactiveRepository.count().block());
+        log.error("Count of categories: " + categoryReactiveRepository.count().block());
+        log.error("Count of recipes: " + recipeReactiveRepository.count().block());
+        log.error("##################");
     }
 
     private List<Recipe> getRecipes() {

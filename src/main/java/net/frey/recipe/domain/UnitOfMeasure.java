@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Document
 public class UnitOfMeasure {
-    @Id
-    private String id;
+    @Id private String id;
     private String description;
 }

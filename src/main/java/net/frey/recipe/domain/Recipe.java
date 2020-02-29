@@ -1,5 +1,7 @@
 package net.frey.recipe.domain;
 
+import java.util.LinkedList;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,16 +9,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.LinkedList;
-import java.util.List;
-
 @Getter
 @Setter
 @Document
 @NoArgsConstructor
 public class Recipe {
-    @Id
-    private String id;
+    @Id private String id;
     private String title;
     private String description;
     private Integer prepTime;
@@ -30,8 +28,7 @@ public class Recipe {
     private Byte[] image;
     private Notes notes;
 
-    @DBRef
-    private List<Category> categories = new LinkedList<>();
+    @DBRef private List<Category> categories = new LinkedList<>();
 
     @Override
     public String toString() {
@@ -40,11 +37,11 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
-//        notes.setRecipe(this);
+        //        notes.setRecipe(this);
     }
 
     public Recipe addIngredient(Ingredient ingredient) {
-//        ingredient.setRecipe(this);
+        //        ingredient.setRecipe(this);
         this.ingredients.add(ingredient);
 
         return this;

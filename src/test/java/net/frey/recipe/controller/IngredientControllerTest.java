@@ -2,7 +2,6 @@ package net.frey.recipe.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -40,7 +39,8 @@ public class IngredientControllerTest {
 
     @Before
     public void setUp() {
-        IngredientController ingredientController = new IngredientController(recipeService, ingredientService, unitOfMeasureService);
+        IngredientController ingredientController =
+                new IngredientController(recipeService, ingredientService, unitOfMeasureService);
         mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
     }
 
