@@ -24,8 +24,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RecipeServiceJpaTest {
-    @InjectMocks private RecipeServiceJpa recipeServiceJpa;
+public class RecipeServiceImplTest {
+    @InjectMocks private RecipeServiceImpl recipeServiceImpl;
 
     @Mock private RecipeRepository recipeRepository;
 
@@ -39,9 +39,9 @@ public class RecipeServiceJpaTest {
         HashSet<Recipe> recipeData = new HashSet<>();
         recipeData.add(recipe);
 
-        when(recipeServiceJpa.getRecipes()).thenReturn(recipeData);
+        when(recipeServiceImpl.getRecipes()).thenReturn(recipeData);
 
-        Set<Recipe> recipes = recipeServiceJpa.getRecipes();
+        Set<Recipe> recipes = recipeServiceImpl.getRecipes();
 
         assertThat(recipes.size(), is(1));
 
@@ -56,7 +56,7 @@ public class RecipeServiceJpaTest {
 
         when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
 
-        Recipe returnedRecipe = recipeServiceJpa.findById("1");
+        Recipe returnedRecipe = recipeServiceImpl.findById("1");
 
         assertThat(returnedRecipe, is(notNullValue()));
         verify(recipeRepository, times(1)).findById(anyString());
@@ -66,7 +66,7 @@ public class RecipeServiceJpaTest {
     @Test
     public void deleteRecipeById() {
         String idToDelete = "2";
-        recipeServiceJpa.deleteById(idToDelete);
+        recipeServiceImpl.deleteById(idToDelete);
 
         verify(recipeRepository, times(1)).deleteById(idToDelete);
     }
@@ -77,6 +77,6 @@ public class RecipeServiceJpaTest {
 
         when(recipeRepository.findById(anyString())).thenReturn(recipe);
 
-        recipeServiceJpa.findById("1");
+        recipeServiceImpl.findById("1");
     }
 }

@@ -10,10 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Service
-public class ImageServiceJpa implements ImageService {
+public class ImageServiceImpl implements ImageService {
     private final RecipeRepository recipeRepository;
 
-    public ImageServiceJpa(RecipeRepository recipeRepository) {
+    public ImageServiceImpl(RecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
     }
 

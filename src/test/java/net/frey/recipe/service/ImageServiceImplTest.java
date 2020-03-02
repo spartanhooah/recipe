@@ -22,10 +22,10 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ImageServiceJpaTest {
+public class ImageServiceImplTest {
     @Mock private RecipeRepository recipeRepository;
 
-    @InjectMocks private ImageServiceJpa imageService;
+    @InjectMocks private ImageServiceImpl imageService;
 
     @Test
     public void saveImageFile() throws IOException {

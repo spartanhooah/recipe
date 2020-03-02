@@ -1,8 +1,8 @@
 package net.frey.recipe.service;
 
-import java.util.Set;
 import net.frey.recipe.command.UnitOfMeasureCommand;
+import reactor.core.publisher.Flux;
 
 public interface UnitOfMeasureService {
-    public Set<UnitOfMeasureCommand> listAllUnitsOfMeasure();
+    Flux<UnitOfMeasureCommand> listAllUnitsOfMeasure();
 }

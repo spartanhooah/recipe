@@ -1,11 +1,12 @@
 package net.frey.recipe.service;
 
 import net.frey.recipe.command.IngredientCommand;
+import reactor.core.publisher.Mono;
 
 public interface IngredientService {
-    IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String ingredientId);
+    Mono<IngredientCommand> findByRecipeIdAndIngredientId(String recipeId, String ingredientId);
 
-    IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);
+    Mono<IngredientCommand> saveIngredientCommand(IngredientCommand ingredientCommand);
 
-    void deleteById(String ingredientId);
+    Mono<Void> deleteById(String ingredientId);
 }

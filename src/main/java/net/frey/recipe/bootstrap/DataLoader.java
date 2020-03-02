@@ -58,14 +58,6 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         loadCategories();
         loadUnitsOfMeasure();
         recipeRepository.saveAll(getRecipes());
-
-        log.error("##################");
-        log.error(
-                "Count of units of measure: "
-                        + unitOfMeasureReactiveRepository.count().block());
-        log.error("Count of categories: " + categoryReactiveRepository.count().block());
-        log.error("Count of recipes: " + recipeReactiveRepository.count().block());
-        log.error("##################");
     }
 
     private List<Recipe> getRecipes() {
