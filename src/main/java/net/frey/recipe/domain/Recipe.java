@@ -27,8 +27,7 @@ public class Recipe {
     private List<Ingredient> ingredients = new LinkedList<>();
     private Byte[] image;
     private Notes notes;
-
-    @DBRef private List<Category> categories = new LinkedList<>();
+    private List<Category> categories = new LinkedList<>();
 
     @Override
     public String toString() {

@@ -11,72 +11,64 @@ import net.frey.recipe.converters.RecipeToRecipeCommand;
 import net.frey.recipe.domain.Recipe;
 import net.frey.recipe.exception.NotFoundException;
 import net.frey.recipe.repository.RecipeRepository;
+import net.frey.recipe.repository.reactive.RecipeReactiveRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class RecipeServiceImpl implements RecipeService {
-    private final RecipeRepository recipeRepository;
+    private final RecipeReactiveRepository recipeRepository;
     private final RecipeCommandToRecipe recipeCommandToRecipe;
     private final RecipeToRecipeCommand recipeToRecipeCommand;
 
     @Override
-    public Set<Recipe> getRecipes() {
-        Set<Recipe> recipes = new HashSet<>();
-        recipeRepository.findAll().iterator().forEachRemaining(recipes::add);
-
-        return recipes;
+    public Flux<Recipe> getRecipes() {
+        return recipeRepository.findAll();
     }
 
     @Override
     @Transactional
-    public Recipe findById(String id) {
-        Optional<Recipe> recipeOptional = recipeRepository.findById(id);
+    public Mono<Recipe> findById(String id) {
+        return recipeRepository.findById(id);
 
-        if (!recipeOptional.isPresent()) {
-            throw new NotFoundException("Could not find recipe with ID " + id);
-        }
-
-        log.debug("found recipe with id " + id);
-        // To non-lazily load (I think)
-        recipeOptional.get().getCategories().size();
-        recipeOptional.get().getIngredients().size();
-
-        return recipeOptional.get();
+//        log.debug("found recipe with id " + id);
+//        // To non-lazily load (I think)
+//        recipeOptional.get().getCategories().size();
+//        recipeOptional.get().getIngredients().size();
     }
 
     @Override
-    public Recipe findByIdFullyPopulated(String id) {
-        Recipe recipe = this.findById(id);
-
-        // To non-lazily load (I think)
-        recipe.getCategories().size();
-        recipe.getIngredients().size();
-
-        return recipe;
+    public Mono<Recipe> findByIdFullyPopulated(String id) {
+        return this.findById(id);
+//
+//        // To non-lazily load (I think)
+//        recipe.getCategories().size();
+//        recipe.getIngredients().size();
     }
 
     @Override
     @Transactional
-    public RecipeCommand saveRecipeCommand(RecipeCommand command) {
+    public Mono<RecipeCommand> saveRecipeCommand(RecipeCommand command) {
         Recipe detachedRecipe = recipeCommandToRecipe.convert(command);
-        Recipe savedRecipe = recipeRepository.save(detachedRecipe);
+        Recipe savedRecipe = recipeRepository.save(detachedRecipe).block();
 
         log.debug("Saved RecipeId:" + savedRecipe.getId());
 
-        return recipeToRecipeCommand.convert(savedRecipe);
+        return Mono.just(recipeToRecipeCommand.convert(savedRecipe));
     }
 
     @Override
     @Transactional
-    public RecipeCommand findCommandById(String id) {
-        return recipeToRecipeCommand.convert(findById(id));
+    public Mono<RecipeCommand> findCommandById(String id) {
+        return Mono.just(recipeToRecipeCommand.convert(findById(id).block()));
     }
 
     @Override
-    public void deleteById(String id) {
-        recipeRepository.deleteById(id);
+    public Mono<Void> deleteById(String id) {
+        return recipeRepository.deleteById(id);
     }
 }

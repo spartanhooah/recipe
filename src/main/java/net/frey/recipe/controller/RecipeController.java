@@ -51,7 +51,7 @@ public class RecipeController {
             return FORM_URL;
         }
 
-        RecipeCommand savedRecipeCommand = recipeService.saveRecipeCommand(recipeCommand);
+        RecipeCommand savedRecipeCommand = recipeService.saveRecipeCommand(recipeCommand).block();
 
         return "redirect:/recipe/" + savedRecipeCommand.getId() + "/show";
     }

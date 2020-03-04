@@ -3,17 +3,19 @@ package net.frey.recipe.service;
 import java.util.Set;
 import net.frey.recipe.command.RecipeCommand;
 import net.frey.recipe.domain.Recipe;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface RecipeService {
-    Set<Recipe> getRecipes();
+    Flux<Recipe> getRecipes();
 
-    Recipe findById(String id);
+    Mono<Recipe> findById(String id);
 
-    Recipe findByIdFullyPopulated(String id);
+    Mono<Recipe> findByIdFullyPopulated(String id);
 
-    RecipeCommand saveRecipeCommand(RecipeCommand command);
+    Mono<RecipeCommand> saveRecipeCommand(RecipeCommand command);
 
-    RecipeCommand findCommandById(String id);
+    Mono<RecipeCommand> findCommandById(String id);
 
-    void deleteById(String id);
+    Mono<Void> deleteById(String id);
 }

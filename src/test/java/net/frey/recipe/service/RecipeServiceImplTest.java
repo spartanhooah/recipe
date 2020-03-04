@@ -17,17 +17,20 @@ import net.frey.recipe.converters.RecipeToRecipeCommand;
 import net.frey.recipe.domain.Recipe;
 import net.frey.recipe.exception.NotFoundException;
 import net.frey.recipe.repository.RecipeRepository;
+import net.frey.recipe.repository.reactive.RecipeReactiveRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RecipeServiceImplTest {
     @InjectMocks private RecipeServiceImpl recipeServiceImpl;
 
-    @Mock private RecipeRepository recipeRepository;
+    @Mock private RecipeReactiveRepository recipeRepository;
 
     @Mock private RecipeCommandToRecipe recipeCommandToRecipe;
 
@@ -36,14 +39,13 @@ public class RecipeServiceImplTest {
     @Test
     public void getRecipes() {
         Recipe recipe = new Recipe();
-        HashSet<Recipe> recipeData = new HashSet<>();
-        recipeData.add(recipe);
+        Flux<Recipe> recipeData = Flux.just(recipe);
 
         when(recipeServiceImpl.getRecipes()).thenReturn(recipeData);
 
-        Set<Recipe> recipes = recipeServiceImpl.getRecipes();
+        Flux<Recipe> recipes = recipeServiceImpl.getRecipes();
 
-        assertThat(recipes.size(), is(1));
+        assertThat(recipes.count().block(), is(1L));
 
         verify(recipeRepository, times(1)).findAll();
     }
@@ -52,11 +54,11 @@ public class RecipeServiceImplTest {
     public void getRecipeById() {
         Recipe recipe = new Recipe();
         recipe.setId("1");
-        Optional<Recipe> recipeOptional = Optional.of(recipe);
+        Mono<Recipe> recipeMono = Mono.just(recipe);
 
-        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
+        when(recipeRepository.findById(anyString())).thenReturn(recipeMono);
 
-        Recipe returnedRecipe = recipeServiceImpl.findById("1");
+        Mono<Recipe> returnedRecipe = recipeServiceImpl.findById("1");
 
         assertThat(returnedRecipe, is(notNullValue()));
         verify(recipeRepository, times(1)).findById(anyString());
@@ -73,7 +75,7 @@ public class RecipeServiceImplTest {
 
     @Test(expected = NotFoundException.class)
     public void getRecipeIdNotFound() {
-        Optional<Recipe> recipe = Optional.empty();
+        Mono<Recipe> recipe = null;
 
         when(recipeRepository.findById(anyString())).thenReturn(recipe);
 

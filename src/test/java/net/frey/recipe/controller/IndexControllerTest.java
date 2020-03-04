@@ -23,6 +23,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
+import reactor.core.publisher.Flux;
 
 @RunWith(MockitoJUnitRunner.class)
 public class IndexControllerTest {
@@ -46,20 +47,18 @@ public class IndexControllerTest {
 
     @Test
     public void getIndexPage() {
-        Set<Recipe> recipes = new HashSet<>();
-        recipes.add(new Recipe());
-        recipes.add(new Recipe());
+        Flux<Recipe> recipes = Flux.just(new Recipe(), new Recipe());
 
         when(recipeService.getRecipes()).thenReturn(recipes);
 
-        ArgumentCaptor<Set<Recipe>> recipeCaptor = ArgumentCaptor.forClass(Set.class);
+        ArgumentCaptor<Flux<Recipe>> recipeCaptor = ArgumentCaptor.forClass(Flux.class);
 
         String result = indexController.getIndexPage(model);
 
         assertThat(result, is("index"));
         verify(model, times(1)).addAttribute(eq("recipes"), recipeCaptor.capture());
         verify(recipeService, times(1)).getRecipes();
-        Set<Recipe> setInController = recipeCaptor.getValue();
-        assertThat(setInController.size(), is(2));
+        Flux<Recipe> setInController = recipeCaptor.getValue();
+        assertThat(setInController.count().block(), is(2L));
     }
 }

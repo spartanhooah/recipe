@@ -14,7 +14,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Category {
     @Id private String id;
 
-    @DBRef private List<Recipe> recipes = new LinkedList<>();
-
+    private List<Recipe> recipes = new LinkedList<>();
     private String description;
 }

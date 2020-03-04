@@ -47,7 +47,7 @@ public class IngredientControllerTest {
 
     @Test
     public void listIngredients() throws Exception {
-        RecipeCommand recipeCommand = new RecipeCommand();
+        Mono<RecipeCommand> recipeCommand = Mono.just(new RecipeCommand());
         when(recipeService.findCommandById(anyString())).thenReturn(recipeCommand);
 
         mockMvc.perform(get("/recipe/1/ingredients"))
@@ -108,8 +108,9 @@ public class IngredientControllerTest {
     public void newIngredientForm() throws Exception {
         RecipeCommand recipeCommand = new RecipeCommand();
         recipeCommand.setId("1");
+        Mono<RecipeCommand> recipeCommandMono = Mono.just(recipeCommand);
 
-        when(recipeService.findCommandById(anyString())).thenReturn(recipeCommand);
+        when(recipeService.findCommandById(anyString())).thenReturn(recipeCommandMono);
         when(unitOfMeasureService.listAllUnitsOfMeasure()).thenReturn(Flux.empty());
 
         mockMvc.perform(get("/recipe/1/ingredient/new"))
@@ -123,6 +124,8 @@ public class IngredientControllerTest {
 
     @Test
     public void deleteIngredient() throws Exception {
+        when(ingredientService.deleteById(anyString())).thenReturn(Mono.empty());
+
         mockMvc.perform(delete("/recipe/1/ingredient/2"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/1/ingredients"));

@@ -25,6 +25,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import reactor.core.publisher.Mono;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RecipeControllerTest {
@@ -51,8 +52,9 @@ public class RecipeControllerTest {
     public void getRecipe() throws Exception {
         Recipe recipe = new Recipe();
         recipe.setId(DEFAULT_ID);
+        Mono<Recipe> recipeMono = Mono.just(recipe);
 
-        when(recipeService.findById(anyString())).thenReturn(recipe);
+        when(recipeService.findById(anyString())).thenReturn(recipeMono);
 
         mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isOk())
@@ -72,8 +74,9 @@ public class RecipeControllerTest {
     public void postNewRecipeForm() throws Exception {
         RecipeCommand recipeCommand = new RecipeCommand();
         recipeCommand.setId("2");
+        Mono<RecipeCommand> recipeCommandMono = Mono.just(recipeCommand);
 
-        when(recipeService.saveRecipeCommand(any())).thenReturn(recipeCommand);
+        when(recipeService.saveRecipeCommand(any())).thenReturn(recipeCommandMono);
 
         mockMvc.perform(
                         post("/recipe")
