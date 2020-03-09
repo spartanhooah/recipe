@@ -30,23 +30,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @Profile("default")
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
-    private final RecipeRepository recipeRepository;
-    private final UnitOfMeasureRepository unitOfMeasureRepository;
-    private final CategoryRepository categoryRepository;
+//    private final RecipeRepository recipeRepository;
+//    private final UnitOfMeasureRepository unitOfMeasureRepository;
+//    private final CategoryRepository categoryRepository;
     private final UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
     private final CategoryReactiveRepository categoryReactiveRepository;
     private final RecipeReactiveRepository recipeReactiveRepository;
 
     public DataLoader(
-            RecipeRepository recipeRepository,
-            UnitOfMeasureRepository unitOfMeasureRepository,
-            CategoryRepository categoryRepository,
+//            RecipeRepository recipeRepository,
+//            UnitOfMeasureRepository unitOfMeasureRepository,
+//            CategoryRepository categoryRepository,
             UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository,
             CategoryReactiveRepository categoryReactiveRepository,
             RecipeReactiveRepository recipeReactiveRepository) {
-        this.recipeRepository = recipeRepository;
-        this.unitOfMeasureRepository = unitOfMeasureRepository;
-        this.categoryRepository = categoryRepository;
+//        this.recipeRepository = recipeRepository;
+//        this.unitOfMeasureRepository = unitOfMeasureRepository;
+//        this.categoryRepository = categoryRepository;
         this.unitOfMeasureReactiveRepository = unitOfMeasureReactiveRepository;
         this.categoryReactiveRepository = categoryReactiveRepository;
         this.recipeReactiveRepository = recipeReactiveRepository;
@@ -57,20 +57,20 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     public void onApplicationEvent(ContextRefreshedEvent event) {
         loadCategories();
         loadUnitsOfMeasure();
-        recipeRepository.saveAll(getRecipes());
+        recipeReactiveRepository.saveAll(getRecipes());
     }
 
     private List<Recipe> getRecipes() {
         List<Recipe> recipeList = new ArrayList<>();
 
-        UnitOfMeasure tablespoon = unitOfMeasureRepository.findByDescription("Tablespoon").get();
-        UnitOfMeasure teaspoon = unitOfMeasureRepository.findByDescription("Teaspoon").get();
-        UnitOfMeasure each = unitOfMeasureRepository.findByDescription("Each").get();
-        UnitOfMeasure cup = unitOfMeasureRepository.findByDescription("Cup").get();
-        UnitOfMeasure pint = unitOfMeasureRepository.findByDescription("Pint").get();
-        UnitOfMeasure dash = unitOfMeasureRepository.findByDescription("Dash").get();
+        UnitOfMeasure tablespoon = unitOfMeasureReactiveRepository.findByDescription("Tablespoon").block();
+        UnitOfMeasure teaspoon = unitOfMeasureReactiveRepository.findByDescription("Teaspoon").block();
+        UnitOfMeasure each = unitOfMeasureReactiveRepository.findByDescription("Each").block();
+        UnitOfMeasure cup = unitOfMeasureReactiveRepository.findByDescription("Cup").block();
+        UnitOfMeasure pint = unitOfMeasureReactiveRepository.findByDescription("Pint").block();
+        UnitOfMeasure dash = unitOfMeasureReactiveRepository.findByDescription("Dash").block();
 
-        Category mexican = categoryRepository.findByDescription("Mexican").get();
+        Category mexican = categoryReactiveRepository.findByDescription("Mexican").block();
 
         List<Category> currentCategories = new LinkedList<>();
         currentCategories.add(mexican);
@@ -307,53 +307,53 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private void loadUnitsOfMeasure() {
         UnitOfMeasure teaspoon = new UnitOfMeasure();
         teaspoon.setDescription("Teaspoon");
-        unitOfMeasureRepository.save(teaspoon);
+        unitOfMeasureReactiveRepository.save(teaspoon).block();
 
         UnitOfMeasure tablespoon = new UnitOfMeasure();
         tablespoon.setDescription("Tablespoon");
-        unitOfMeasureRepository.save(tablespoon);
+        unitOfMeasureReactiveRepository.save(tablespoon).block();
 
         UnitOfMeasure cup = new UnitOfMeasure();
         cup.setDescription("Cup");
-        unitOfMeasureRepository.save(cup);
+        unitOfMeasureReactiveRepository.save(cup).block();
 
         UnitOfMeasure pinch = new UnitOfMeasure();
         pinch.setDescription("Pinch");
-        unitOfMeasureRepository.save(pinch);
+        unitOfMeasureReactiveRepository.save(pinch).block();
 
         UnitOfMeasure ounce = new UnitOfMeasure();
         ounce.setDescription("Ounce");
-        unitOfMeasureRepository.save(ounce);
+        unitOfMeasureReactiveRepository.save(ounce).block();
 
         UnitOfMeasure each = new UnitOfMeasure();
         each.setDescription("Each");
-        unitOfMeasureRepository.save(each);
+        unitOfMeasureReactiveRepository.save(each).block();
 
         UnitOfMeasure pint = new UnitOfMeasure();
         pint.setDescription("Pint");
-        unitOfMeasureRepository.save(pint);
+        unitOfMeasureReactiveRepository.save(pint).block();
 
         UnitOfMeasure dash = new UnitOfMeasure();
         dash.setDescription("Dash");
-        unitOfMeasureRepository.save(dash);
+        unitOfMeasureReactiveRepository.save(dash).block();
     }
 
     private void loadCategories() {
         Category american = new Category();
         american.setDescription("American");
-        categoryRepository.save(american);
+        categoryReactiveRepository.save(american).block();
 
         Category italian = new Category();
         italian.setDescription("Italian");
-        categoryRepository.save(italian);
+        categoryReactiveRepository.save(italian).block();
 
         Category mexican = new Category();
         mexican.setDescription("Mexican");
-        categoryRepository.save(mexican);
+        categoryReactiveRepository.save(mexican).block();
 
         Category fastFood = new Category();
         fastFood.setDescription("Fast Food");
-        categoryRepository.save(fastFood);
+        categoryReactiveRepository.save(fastFood).block();
     }
 
     public byte[] extractBytes(String imageName) throws IOException {

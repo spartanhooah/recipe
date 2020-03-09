@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import reactor.core.publisher.Mono;
 
 @RunWith(SpringRunner.class)
 @DataMongoTest
@@ -34,9 +35,9 @@ public class UnitOfMeasureRepositoryIT {
 
         DataLoader dataLoader =
                 new DataLoader(
-                        recipeRepository,
-                        unitOfMeasureRepository,
-                        categoryRepository,
+//                        recipeRepository,
+//                        unitOfMeasureRepository,
+//                        categoryRepository,
                         unitOfMeasureReactiveRepository,
                         categoryReactiveRepository,
                         recipeReactiveRepository);
@@ -46,15 +47,15 @@ public class UnitOfMeasureRepositoryIT {
 
     @Test
     public void findCupByDescription() {
-        Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Cup");
+        Mono<UnitOfMeasure> unitOfMeasureMono = unitOfMeasureReactiveRepository.findByDescription("Cup");
 
-        assertThat(uomOptional.get().getDescription(), is("Cup"));
+        assertThat(unitOfMeasureMono.block().getDescription(), is("Cup"));
     }
 
     @Test
     public void findTeaspoonByDescription() {
-        Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
+        Mono<UnitOfMeasure> unitOfMeasureMono = unitOfMeasureReactiveRepository.findByDescription("Teaspoon");
 
-        assertThat(uomOptional.get().getDescription(), is("Teaspoon"));
+        assertThat(unitOfMeasureMono.block().getDescription(), is("Teaspoon"));
     }
 }

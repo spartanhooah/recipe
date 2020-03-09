@@ -9,14 +9,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 import net.frey.recipe.converters.RecipeCommandToRecipe;
 import net.frey.recipe.converters.RecipeToRecipeCommand;
 import net.frey.recipe.domain.Recipe;
-import net.frey.recipe.exception.NotFoundException;
-import net.frey.recipe.repository.RecipeRepository;
 import net.frey.recipe.repository.reactive.RecipeReactiveRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,17 +63,10 @@ public class RecipeServiceImplTest {
     @Test
     public void deleteRecipeById() {
         String idToDelete = "2";
+        when(recipeRepository.deleteById(anyString())).thenReturn(Mono.empty());
+
         recipeServiceImpl.deleteById(idToDelete);
 
         verify(recipeRepository, times(1)).deleteById(idToDelete);
-    }
-
-    @Test(expected = NotFoundException.class)
-    public void getRecipeIdNotFound() {
-        Mono<Recipe> recipe = null;
-
-        when(recipeRepository.findById(anyString())).thenReturn(recipe);
-
-        recipeServiceImpl.findById("1");
     }
 }

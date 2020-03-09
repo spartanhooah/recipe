@@ -10,8 +10,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import java.util.HashSet;
-import java.util.Set;
 import net.frey.recipe.domain.Recipe;
 import net.frey.recipe.service.RecipeService;
 import org.junit.Before;
@@ -36,6 +34,9 @@ public class IndexControllerTest {
     @Before
     public void setUp() {
         indexController = new IndexController(recipeService);
+
+        Flux<Recipe> recipes = Flux.just(new Recipe(), new Recipe());
+        when(recipeService.getRecipes()).thenReturn(recipes);
     }
 
     @Test
@@ -47,10 +48,6 @@ public class IndexControllerTest {
 
     @Test
     public void getIndexPage() {
-        Flux<Recipe> recipes = Flux.just(new Recipe(), new Recipe());
-
-        when(recipeService.getRecipes()).thenReturn(recipes);
-
         ArgumentCaptor<Flux<Recipe>> recipeCaptor = ArgumentCaptor.forClass(Flux.class);
 
         String result = indexController.getIndexPage(model);
@@ -58,7 +55,7 @@ public class IndexControllerTest {
         assertThat(result, is("index"));
         verify(model, times(1)).addAttribute(eq("recipes"), recipeCaptor.capture());
         verify(recipeService, times(1)).getRecipes();
-        Flux<Recipe> setInController = recipeCaptor.getValue();
-        assertThat(setInController.count().block(), is(2L));
+        Flux<Recipe> fluxInController = recipeCaptor.getValue();
+        assertThat(fluxInController.count().block(), is(2L));
     }
 }

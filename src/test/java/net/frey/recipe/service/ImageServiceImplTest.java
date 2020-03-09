@@ -1,5 +1,6 @@
 package net.frey.recipe.service;
 
+import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentCaptor.forClass;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.Optional;
 import net.frey.recipe.domain.Recipe;
 import net.frey.recipe.repository.RecipeRepository;
+import net.frey.recipe.repository.reactive.RecipeReactiveRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -20,10 +22,11 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
+import reactor.core.publisher.Mono;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ImageServiceImplTest {
-    @Mock private RecipeRepository recipeRepository;
+    @Mock private RecipeReactiveRepository recipeRepository;
 
     @InjectMocks private ImageServiceImpl imageService;
 
@@ -39,9 +42,9 @@ public class ImageServiceImplTest {
 
         Recipe recipe = new Recipe();
         recipe.setId(id);
-        Optional<Recipe> recipeOptional = Optional.of(recipe);
 
-        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
+        when(recipeRepository.findById(anyString())).thenReturn(Mono.just(recipe));
+//        when(recipeRepository.save(any(Recipe.class))).thenReturn(Mono.just(recipe));
 
         ArgumentCaptor<Recipe> argumentCaptor = forClass(Recipe.class);
 

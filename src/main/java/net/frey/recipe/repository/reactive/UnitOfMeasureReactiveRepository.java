@@ -2,6 +2,9 @@ package net.frey.recipe.repository.reactive;
 
 import net.frey.recipe.domain.UnitOfMeasure;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import reactor.core.publisher.Mono;
 
 public interface UnitOfMeasureReactiveRepository
-        extends ReactiveMongoRepository<UnitOfMeasure, String> {}
+        extends ReactiveMongoRepository<UnitOfMeasure, String> {
+    Mono<UnitOfMeasure> findByDescription(String description);
+}
