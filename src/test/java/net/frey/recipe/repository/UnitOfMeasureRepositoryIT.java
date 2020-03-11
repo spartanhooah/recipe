@@ -3,7 +3,6 @@ package net.frey.recipe.repository;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.Optional;
 import net.frey.recipe.bootstrap.DataLoader;
 import net.frey.recipe.domain.UnitOfMeasure;
 import net.frey.recipe.repository.reactive.CategoryReactiveRepository;
@@ -35,9 +34,9 @@ public class UnitOfMeasureRepositoryIT {
 
         DataLoader dataLoader =
                 new DataLoader(
-//                        recipeRepository,
-//                        unitOfMeasureRepository,
-//                        categoryRepository,
+                        //                        recipeRepository,
+                        //                        unitOfMeasureRepository,
+                        //                        categoryRepository,
                         unitOfMeasureReactiveRepository,
                         categoryReactiveRepository,
                         recipeReactiveRepository);
@@ -47,14 +46,16 @@ public class UnitOfMeasureRepositoryIT {
 
     @Test
     public void findCupByDescription() {
-        Mono<UnitOfMeasure> unitOfMeasureMono = unitOfMeasureReactiveRepository.findByDescription("Cup");
+        Mono<UnitOfMeasure> unitOfMeasureMono =
+                unitOfMeasureReactiveRepository.findByDescription("Cup");
 
         assertThat(unitOfMeasureMono.block().getDescription(), is("Cup"));
     }
 
     @Test
     public void findTeaspoonByDescription() {
-        Mono<UnitOfMeasure> unitOfMeasureMono = unitOfMeasureReactiveRepository.findByDescription("Teaspoon");
+        Mono<UnitOfMeasure> unitOfMeasureMono =
+                unitOfMeasureReactiveRepository.findByDescription("Teaspoon");
 
         assertThat(unitOfMeasureMono.block().getDescription(), is("Teaspoon"));
     }

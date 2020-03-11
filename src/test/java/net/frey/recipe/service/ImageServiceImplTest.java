@@ -10,9 +10,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.util.Optional;
 import net.frey.recipe.domain.Recipe;
-import net.frey.recipe.repository.RecipeRepository;
 import net.frey.recipe.repository.reactive.RecipeReactiveRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -37,9 +37,9 @@ public class CategoryReactiveRepositoryIT {
 
         DataLoader dataLoader =
                 new DataLoader(
-//                        recipeRepository,
-//                        unitOfMeasureRepository,
-//                        categoryRepository,
+                        //                        recipeRepository,
+                        //                        unitOfMeasureRepository,
+                        //                        categoryRepository,
                         unitOfMeasureReactiveRepository,
                         categoryReactiveRepository,
                         recipeReactiveRepository);

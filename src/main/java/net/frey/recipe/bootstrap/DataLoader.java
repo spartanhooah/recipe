@@ -14,9 +14,6 @@ import net.frey.recipe.domain.Difficulty;
 import net.frey.recipe.domain.Ingredient;
 import net.frey.recipe.domain.Recipe;
 import net.frey.recipe.domain.UnitOfMeasure;
-import net.frey.recipe.repository.CategoryRepository;
-import net.frey.recipe.repository.RecipeRepository;
-import net.frey.recipe.repository.UnitOfMeasureRepository;
 import net.frey.recipe.repository.reactive.CategoryReactiveRepository;
 import net.frey.recipe.repository.reactive.RecipeReactiveRepository;
 import net.frey.recipe.repository.reactive.UnitOfMeasureReactiveRepository;
@@ -30,23 +27,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @Profile("default")
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
-//    private final RecipeRepository recipeRepository;
-//    private final UnitOfMeasureRepository unitOfMeasureRepository;
-//    private final CategoryRepository categoryRepository;
+    //    private final RecipeRepository recipeRepository;
+    //    private final UnitOfMeasureRepository unitOfMeasureRepository;
+    //    private final CategoryRepository categoryRepository;
     private final UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
     private final CategoryReactiveRepository categoryReactiveRepository;
     private final RecipeReactiveRepository recipeReactiveRepository;
 
     public DataLoader(
-//            RecipeRepository recipeRepository,
-//            UnitOfMeasureRepository unitOfMeasureRepository,
-//            CategoryRepository categoryRepository,
+            //            RecipeRepository recipeRepository,
+            //            UnitOfMeasureRepository unitOfMeasureRepository,
+            //            CategoryRepository categoryRepository,
             UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository,
             CategoryReactiveRepository categoryReactiveRepository,
             RecipeReactiveRepository recipeReactiveRepository) {
-//        this.recipeRepository = recipeRepository;
-//        this.unitOfMeasureRepository = unitOfMeasureRepository;
-//        this.categoryRepository = categoryRepository;
+        //        this.recipeRepository = recipeRepository;
+        //        this.unitOfMeasureRepository = unitOfMeasureRepository;
+        //        this.categoryRepository = categoryRepository;
         this.unitOfMeasureReactiveRepository = unitOfMeasureReactiveRepository;
         this.categoryReactiveRepository = categoryReactiveRepository;
         this.recipeReactiveRepository = recipeReactiveRepository;
@@ -63,8 +60,10 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private List<Recipe> getRecipes() {
         List<Recipe> recipeList = new ArrayList<>();
 
-        UnitOfMeasure tablespoon = unitOfMeasureReactiveRepository.findByDescription("Tablespoon").block();
-        UnitOfMeasure teaspoon = unitOfMeasureReactiveRepository.findByDescription("Teaspoon").block();
+        UnitOfMeasure tablespoon =
+                unitOfMeasureReactiveRepository.findByDescription("Tablespoon").block();
+        UnitOfMeasure teaspoon =
+                unitOfMeasureReactiveRepository.findByDescription("Teaspoon").block();
         UnitOfMeasure each = unitOfMeasureReactiveRepository.findByDescription("Each").block();
         UnitOfMeasure cup = unitOfMeasureReactiveRepository.findByDescription("Cup").block();
         UnitOfMeasure pint = unitOfMeasureReactiveRepository.findByDescription("Pint").block();
