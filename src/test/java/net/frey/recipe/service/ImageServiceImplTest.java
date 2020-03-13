@@ -1,6 +1,5 @@
 package net.frey.recipe.service;
 
-import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentCaptor.forClass;

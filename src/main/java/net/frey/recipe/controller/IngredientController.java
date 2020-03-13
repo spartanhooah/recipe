@@ -40,7 +40,7 @@ public class IngredientController {
         log.info("showing ingredient with id " + ingredientId);
         model.addAttribute(
                 "ingredient",
-                ingredientService.findByRecipeIdAndIngredientId(recipeId, ingredientId).block());
+                ingredientService.findByRecipeIdAndIngredientId(recipeId, ingredientId));
 
         return "recipe/ingredient/show";
     }
@@ -55,7 +55,7 @@ public class IngredientController {
                 ingredientService.findByRecipeIdAndIngredientId(recipeId, ingredientId).block());
         model.addAttribute(
                 "unitOfMeasureList",
-                unitOfMeasureService.listAllUnitsOfMeasure().collectList().block());
+                unitOfMeasureService.listAllUnitsOfMeasure());
 
         return "recipe/ingredient/form";
     }
