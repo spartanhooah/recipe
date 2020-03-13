@@ -84,7 +84,7 @@ public class IngredientController {
         model.addAttribute("ingredient", ingredientCommand);
         model.addAttribute(
                 "unitOfMeasureList",
-                unitOfMeasureService.listAllUnitsOfMeasure().collectList().block());
+                unitOfMeasureService.listAllUnitsOfMeasure());
 
         return "recipe/ingredient/form";
     }
