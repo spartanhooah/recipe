@@ -11,8 +11,11 @@ import net.frey.recipe.service.RecipeService;
 import net.frey.recipe.service.UnitOfMeasureService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,9 +24,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @RequiredArgsConstructor
 public class IngredientController {
+    private static final String FORM_URL = "recipe/ingredient/form";
+
     private final RecipeService recipeService;
     private final IngredientService ingredientService;
     private final UnitOfMeasureService unitOfMeasureService;
+
+    private WebDataBinder webDataBinder;
+
+    @InitBinder
+    public void initBinder(WebDataBinder webDataBinder) {
+        this.webDataBinder = webDataBinder;
+    }
 
     @GetMapping("/recipe/{recipeId}/ingredients")
     public String listIngredients(@PathVariable String recipeId, @NotNull Model model) {
@@ -53,15 +65,22 @@ public class IngredientController {
         model.addAttribute(
                 "ingredient",
                 ingredientService.findByRecipeIdAndIngredientId(recipeId, ingredientId).block());
-        model.addAttribute(
-                "unitOfMeasureList",
-                unitOfMeasureService.listAllUnitsOfMeasure());
+        model.addAttribute("unitOfMeasureList", unitOfMeasureService.listAllUnitsOfMeasure());
 
-        return "recipe/ingredient/form";
+        return FORM_URL;
     }
 
     @PostMapping("/recipe/{recipeId}/ingredients")
     public String saveOrUpdate(@ModelAttribute IngredientCommand ingredientCommand) {
+        webDataBinder.validate();
+        BindingResult bindingResult = webDataBinder.getBindingResult();
+
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(objectError -> log.debug(objectError.toString()));
+
+            return FORM_URL;
+        }
+
         IngredientCommand savedIngredientCommand =
                 ingredientService.saveIngredientCommand(ingredientCommand).block();
 
@@ -82,11 +101,9 @@ public class IngredientController {
         ingredientCommand.setUnitOfMeasure(new UnitOfMeasureCommand());
 
         model.addAttribute("ingredient", ingredientCommand);
-        model.addAttribute(
-                "unitOfMeasureList",
-                unitOfMeasureService.listAllUnitsOfMeasure());
+        model.addAttribute("unitOfMeasureList", unitOfMeasureService.listAllUnitsOfMeasure());
 
-        return "recipe/ingredient/form";
+        return FORM_URL;
     }
 
     @DeleteMapping("recipe/{recipeId}/ingredient/{ingredientId}")

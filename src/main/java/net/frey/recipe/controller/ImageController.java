@@ -1,5 +1,6 @@
 package net.frey.recipe.controller;
 
+import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.frey.recipe.service.ImageService;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.constraints.NotNull;
 
 @Slf4j
 @Controller
@@ -38,27 +37,27 @@ public class ImageController {
         return "redirect:/recipe/" + recipeId + "/show";
     }
 
-//    @GetMapping("/recipe/{recipeId}/image")
-//    public void getImage(@PathVariable String recipeId, HttpServletResponse response)
-//            throws IOException {
-//        RecipeCommand recipeCommand = recipeService.findCommandById(recipeId).block();
-//
-//        if (recipeCommand.getImage() != null) {
-//            log.debug("found image for recipe command with id " + recipeCommand.getId());
-//
-//            byte[] bytes = new byte[recipeCommand.getImage().length];
-//
-//            int i = 0;
-//
-//            for (Byte wrappedByte : recipeCommand.getImage()) {
-//                bytes[i++] = wrappedByte;
-//            }
-//
-//            response.setContentType("image/jpeg");
-//            InputStream is = new ByteArrayInputStream(bytes);
-//            IOUtils.copy(is, response.getOutputStream());
-//        } else {
-//            log.debug("somehow didn't find image for recipe command with id " + recipeId);
-//        }
-//    }
+    //    @GetMapping("/recipe/{recipeId}/image")
+    //    public void getImage(@PathVariable String recipeId, HttpServletResponse response)
+    //            throws IOException {
+    //        RecipeCommand recipeCommand = recipeService.findCommandById(recipeId).block();
+    //
+    //        if (recipeCommand.getImage() != null) {
+    //            log.debug("found image for recipe command with id " + recipeCommand.getId());
+    //
+    //            byte[] bytes = new byte[recipeCommand.getImage().length];
+    //
+    //            int i = 0;
+    //
+    //            for (Byte wrappedByte : recipeCommand.getImage()) {
+    //                bytes[i++] = wrappedByte;
+    //            }
+    //
+    //            response.setContentType("image/jpeg");
+    //            InputStream is = new ByteArrayInputStream(bytes);
+    //            IOUtils.copy(is, response.getOutputStream());
+    //        } else {
+    //            log.debug("somehow didn't find image for recipe command with id " + recipeId);
+    //        }
+    //    }
 }

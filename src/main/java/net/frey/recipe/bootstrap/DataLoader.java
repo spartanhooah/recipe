@@ -27,23 +27,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @Profile("default")
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
-    //    private final RecipeRepository recipeRepository;
-    //    private final UnitOfMeasureRepository unitOfMeasureRepository;
-    //    private final CategoryRepository categoryRepository;
     private final UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
     private final CategoryReactiveRepository categoryReactiveRepository;
     private final RecipeReactiveRepository recipeReactiveRepository;
 
     public DataLoader(
-            //            RecipeRepository recipeRepository,
-            //            UnitOfMeasureRepository unitOfMeasureRepository,
-            //            CategoryRepository categoryRepository,
             UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository,
             CategoryReactiveRepository categoryReactiveRepository,
             RecipeReactiveRepository recipeReactiveRepository) {
-        //        this.recipeRepository = recipeRepository;
-        //        this.unitOfMeasureRepository = unitOfMeasureRepository;
-        //        this.categoryRepository = categoryRepository;
         this.unitOfMeasureReactiveRepository = unitOfMeasureReactiveRepository;
         this.categoryReactiveRepository = categoryReactiveRepository;
         this.recipeReactiveRepository = recipeReactiveRepository;
@@ -54,10 +45,11 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     public void onApplicationEvent(ContextRefreshedEvent event) {
         loadCategories();
         loadUnitsOfMeasure();
-        recipeReactiveRepository.saveAll(getRecipes());
+        recipeReactiveRepository.saveAll(getRecipes()).collectList().block();
     }
 
     private List<Recipe> getRecipes() {
+        log.error("Setting up recipes");
         List<Recipe> recipeList = new ArrayList<>();
 
         UnitOfMeasure tablespoon =
